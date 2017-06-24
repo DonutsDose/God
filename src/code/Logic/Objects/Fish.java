@@ -13,6 +13,7 @@ public class Fish extends Animal {
     private static final char FISH_FACE = '\u066D';
     private static final int FISH_COLOR = 0x336633;
 
+
     public Fish(int x, int y) {
         super(x, y, FISH_FACE, FISH_COLOR, CREATURE_ANIMAL_FISH, 0, 100, 0);
     }

@@ -22,6 +22,24 @@ public class World {
 
     private LinkedList<Point> grass = new LinkedList();
     private LinkedList<Point> waterHigh = new LinkedList();
+    private LinkedList<Point> groundHigh = new LinkedList();
+
+    public void initGroundHigh() {
+        for (int i=0; i<Map.MAP_HIGHT; i++)
+            for (int j=0; j<Map.MAP_WIDTH; j++)
+                if (landscape[i][j] == Map.LANDSCAPE_GROUND_HIGH) groundHigh.add(new Point(i, j));
+    }
+
+    public Point getGroundOut() {
+        int index = xRandom.getIntInRange(0, groundHigh.size() - 1);
+        return groundHigh.get(index);
+    }
+
+    private boolean checkGround(int x, int y) {
+        if (landscape[x][y] == Map.LANDSCAPE_GROUND_HIGH || landscape[x][y] == Map.LANDSCAPE_GROUND_LOW ||
+                landscape[x][y] == Map.LANDSCAPE_GRASS) return true;
+        return false;
+    }
 
     public void replant(int cnt) {
         for (int i=1; i<=cnt; i++) addNewTree();

@@ -47,6 +47,7 @@ public class WorldCreator {
         addFreshWater();
         world.initEmptyGrass();
         world.initWaterHigh();
+        world.initGroundHigh();
         addPlants();
         return world;
     }

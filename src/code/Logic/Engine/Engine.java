@@ -4,6 +4,7 @@ import code.GUI.Main.MainPanel;
 import code.GUI.Map.Map;
 import code.GUI.Map.MapRender;
 import code.Logic.Objects.Fish;
+import code.Logic.Objects.Rabbit;
 import code.MyMath.Point;
 import code.MyMath.xRandom;
 
@@ -18,9 +19,15 @@ import java.awt.event.ActionListener;
 public class Engine{
 
     private static int date = 0;
-    private static Timer timer = null;
+    public static Timer timer = null;
     private static int timerDelay = 510;
     private static int replantTree = 0;
+
+    //STATISTIC
+    public static int fishCount = 0;
+    public static int fishSum = 0;
+    public static int rabbitCount = 0;
+    public static int rabbitSum = 0;
 
     public static void start() {
         if (timer == null) {
@@ -36,7 +43,6 @@ public class Engine{
 
     public static void act() {
         date++;
-        MainPanel.mapInfoPanel.update(date);
         //DYNAMIC
         animalAct();
         //STATIC
@@ -44,7 +50,9 @@ public class Engine{
         //NEW
         Map.world.replant(replantTree);
         addNewFish();
+        addNewRabbit();
         //-------
+        MainPanel.mapInfoPanel.update(date, "<html>Fish : " + fishCount  + "<br> Rabbit : " + rabbitCount + "</html>");
         MapRender.update();
         MainPanel.map.repaint();
     }
@@ -57,14 +65,6 @@ public class Engine{
             }
     }
 
-    private static void addNewFish() {
-        for (int i=1; i<Map.FISH_CREATING_COUNT; i++) {
-            if (!xRandom.getBoolean(Map.FISH_CREATING_PROBABLY)) continue;
-            Point pt = Map.world.getWaterHigh();
-            Map.world.animals.add(new Fish(pt.getX(), pt.getY()));
-        }
-    }
-
     private static void plantAct() {
         replantTree = 0;
         for (int i=0; i<Map.world.plants.size(); i++) {
@@ -73,6 +73,22 @@ public class Engine{
                 i--;
                 replantTree++;
             }
+        }
+    }
+
+    private static void addNewFish() {
+        for (int i=1; i<=Map.FISH_CREATING_COUNT; i++) {
+            if (!xRandom.getBoolean(Map.FISH_CREATING_PROBABLY)) continue;
+            Point pt = Map.world.getWaterHigh();
+            if (Map.checkEmptyPosition(pt.getX(), pt.getY())) Map.world.animals.add(new Fish(pt.getX(), pt.getY()));
+        }
+    }
+
+    private static void addNewRabbit() {
+        for (int i=1; i<=Map.RABBIT_CREATING_COUNT; i++) {
+            if (!xRandom.getBoolean(Map.RABBIT_CREATING_PROBABLY)) continue;
+            Point pt = Map.world.getGroundOut();
+            if (Map.checkEmptyPosition(pt.getX(), pt.getY())) Map.world.animals.add(new Rabbit(pt.getX(), pt.getY()));
         }
     }
 

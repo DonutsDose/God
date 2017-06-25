@@ -14,15 +14,17 @@ abstract public class Animal extends Creature {
     protected static final int PROBABLY_OF_SLEEPING = 45;
 
     protected static final int CREATURE_ANIMAL_FISH = 11;
+    protected static final int CREATURE_ANIMAL_RABBIT = 12;
 
     protected boolean[] ration = new boolean[Map.MAX_CREATURE_TYPE];
     protected int[] passability = new int[Map.MAX_LANDSCAPE_TYPE];
     protected int MAX_ENERGY, energy, satiety, MAX_SATIETY;
 
-    public Animal(int x, int y, char face, int color, int type, int PERIOD_OF_PREGNANT, int MAX_ENERGY, int MAX_SATIETY) {
-        super(x, y, face, color, type, PERIOD_OF_PREGNANT);
+    public Animal(int x, int y, char face, int color, int type, int PERIOD_OF_PREGNANT, int MAX_ENERGY, int MAX_SATIETY, int PROBABLY_DIE) {
+        super(x, y, face, color, type, PERIOD_OF_PREGNANT, PROBABLY_DIE);
         this.MAX_ENERGY = MAX_ENERGY;
         this.MAX_SATIETY = MAX_SATIETY;
+        energy = MAX_ENERGY;
         for (int i=0; i<Map.MAX_CREATURE_TYPE; i++) ration[i] = false;
         for (int i=0; i<Map.MAX_LANDSCAPE_TYPE; i++) passability[i] = -1;
         setPassability();

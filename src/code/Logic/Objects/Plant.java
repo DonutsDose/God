@@ -65,7 +65,7 @@ public class Plant extends Creature {
     public static final int PERIOD_OF_PREGNANCY_COCONUT = 150;
     public static final int PERIOD_OF_PREGNANCY_BELLADONNA = 60;
 
-    public static final int PLANT_DELTA_OVER_PROBABLY = 400;
+    public static final int PROBABLY_DIE = 400;
     public static final int PLANT_PREGNANT_PROBABLY = 45;
     public static final int PRODUCT_OVER = 10;
 
@@ -73,7 +73,7 @@ public class Plant extends Creature {
     public boolean product = false;
 
     public Plant(int x, int y, int color, int type, int PERIOD_OF_PREGNANT, int MIN_REPRODUCT, int MAX_REPRODUCT, int calories) {
-        super(x, y, 'T', color, type, PERIOD_OF_PREGNANT);
+        super(x, y, 'T', color, type, PERIOD_OF_PREGNANT, PROBABLY_DIE);
         this.MIN_REPRODUCT = MIN_REPRODUCT;
         this.MAX_REPRODUCT = MAX_REPRODUCT;
         this.calories = calories;
@@ -81,8 +81,7 @@ public class Plant extends Creature {
 
     @Override
     public boolean act() {
-        age++;
-        if (xRandom.getBoolean(age / PLANT_DELTA_OVER_PROBABLY)) return false;
+        if (!super.act()) return false;
         if (productOver == 0) product = false; else productOver--;
         if (!pregnant) pregnant = xRandom.getBoolean(PLANT_PREGNANT_PROBABLY);
         if (pregnant) {

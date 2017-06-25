@@ -26,7 +26,9 @@ public class Map extends JTable {
     public static final int MAX_CREATURE_TYPE         = 12;
     public static final int MAX_LANDSCAPE_TYPE         = 9;
     public static final int FISH_CREATING_PROBABLY = 10;
-    public static final int FISH_CREATING_COUNT = 5;
+    public static final int FISH_CREATING_COUNT = 4;
+    public static final int RABBIT_CREATING_PROBABLY = 1;
+    public static final int RABBIT_CREATING_COUNT = 1;
 
     public static World world = null;
 

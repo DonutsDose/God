@@ -20,8 +20,8 @@ public class MapInfoPanel extends JPanel {
         setVisible(true);
     }
 
-    public final void update(int days) {
-        info.setText(Formatter.formatDate(days));
+    public final void update(int days, String msg) {
+        info.setText(String.format("<html>Date : %s<br>%s</html>", Formatter.formatDate(days), msg));
     }
 
     public void reset() {
@@ -31,7 +31,7 @@ public class MapInfoPanel extends JPanel {
     private void setupView() {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setBorder(new TitledBorder("Map Info"));
-        setPreferredSize(new Dimension(0, 100));
+        setPreferredSize(new Dimension(300, 100));
     }
 
     private void setupInfo() {

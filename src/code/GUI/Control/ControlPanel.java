@@ -44,7 +44,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pause.setEnabled(false);
+                pause.setEnabled(true);
                 stop.setEnabled(false);
                 start.setEnabled(false);
                 reset.setEnabled(false);
@@ -62,7 +62,11 @@ public class ControlPanel extends JPanel implements ChangeListener {
         pause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO
+                Engine.timer.stop();
+                start.setEnabled(true);
+                stop.setEnabled(false);
+                reset.setEnabled(false);
+                pause.setEnabled(false);
             }
         });
         pause.setVisible(true);

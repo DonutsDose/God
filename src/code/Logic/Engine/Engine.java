@@ -19,7 +19,7 @@ public class Engine{
 
     private static int date = 0;
     private static Timer timer = null;
-    private static int timerDelay = 100;
+    private static int timerDelay = 510;
     private static int replantTree = 0;
 
     public static void start() {

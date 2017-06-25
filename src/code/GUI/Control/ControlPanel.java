@@ -26,7 +26,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
     }
 
     private void setupSlider() {
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
         slider.addChangeListener(this);
         slider.setMajorTickSpacing(10);
         slider.setMinorTickSpacing(1);

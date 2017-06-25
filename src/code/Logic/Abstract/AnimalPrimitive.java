@@ -8,7 +8,7 @@ import code.MyMath.xRandom;
  * Created by DonutsDose-PC on 23.06.2017.
  */
 
-abstract public class Animal extends Creature {
+abstract public class AnimalPrimitive extends Creature {
 
     protected static final int MIN_ENERGY = 10;
     protected static final int PROBABLY_OF_SLEEPING = 45;
@@ -20,7 +20,7 @@ abstract public class Animal extends Creature {
     protected int[] passability = new int[Map.MAX_LANDSCAPE_TYPE];
     protected int MAX_ENERGY, energy, satiety, MAX_SATIETY;
 
-    public Animal(int x, int y, char face, int color, int type, int PERIOD_OF_PREGNANT, int MAX_ENERGY, int MAX_SATIETY, int PROBABLY_DIE) {
+    public AnimalPrimitive(int x, int y, char face, int color, int type, int PERIOD_OF_PREGNANT, int MAX_ENERGY, int MAX_SATIETY, int PROBABLY_DIE) {
         super(x, y, face, color, type, PERIOD_OF_PREGNANT, PROBABLY_DIE);
         this.MAX_ENERGY = MAX_ENERGY;
         this.MAX_SATIETY = MAX_SATIETY;

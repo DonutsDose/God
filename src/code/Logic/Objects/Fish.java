@@ -1,18 +1,18 @@
 package code.Logic.Objects;
 
 import code.GUI.Map.Map;
-import code.Logic.Abstract.Animal;
+import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Engine.Engine;
 import code.MyMath.xRandom;
 
 /**
  * Created by DonutsDose-PC on 23.06.2017.
  */
-public class Fish extends Animal {
+public class Fish extends AnimalPrimitive {
 
     private static final int FISH_PROBABLY_DIE = 20;
     private static final int FISH_MAX_ENERGY = 200;
-    private static final char FISH_FACE = '\u066D';
+    private static final char FISH_FACE = '\u037D';
     private static final int FISH_COLOR = 0x336633;
 
 
@@ -27,7 +27,7 @@ public class Fish extends Animal {
             Engine.fishCount--;
             return false;
         }
-        if (energy < (MAX_ENERGY>>1) && xRandom.getBoolean(Animal.PROBABLY_OF_SLEEPING)) sleep(); else move(0, 0);
+        if (energy < (MAX_ENERGY>>1) && xRandom.getBoolean(AnimalPrimitive.PROBABLY_OF_SLEEPING)) sleep(); else move(0, 0);
         return true;
     }
 

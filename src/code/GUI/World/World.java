@@ -1,7 +1,7 @@
 package code.GUI.World;
 
 import code.GUI.Map.Map;
-import code.Logic.Abstract.Animal;
+import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Objects.Plant;
 import code.MyMath.Point;
 import code.MyMath.xRandom;
@@ -18,7 +18,7 @@ public class World {
 
     public LinkedList<Plant> plants = new LinkedList();
 
-    public LinkedList<Animal> animals = new LinkedList();
+    public LinkedList<AnimalPrimitive> animals = new LinkedList();
 
     private LinkedList<Point> grass = new LinkedList();
     private LinkedList<Point> waterHigh = new LinkedList();

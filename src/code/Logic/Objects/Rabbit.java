@@ -1,17 +1,17 @@
 package code.Logic.Objects;
 
 import code.GUI.Map.Map;
-import code.Logic.Abstract.Animal;
+import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Engine.Engine;
 import code.MyMath.xRandom;
 
 /**
  * Created by DonutsDose-PC on 25.06.2017.
  */
-public class Rabbit extends Animal {
+public class Rabbit extends AnimalPrimitive {
 
-    private static final char RABBIT_FACE = '\u1D25';
-    private static final int RABBIT_COLOR = 0x333333;
+    private static final char RABBIT_FACE = '\u066D';
+    private static final int RABBIT_COLOR = 0x696969;
     private static final int RABBIT_PROBABLY_DIE = 800;
     private static final int RABBIT_MAX_ENERGY = 300;
 
@@ -26,7 +26,7 @@ public class Rabbit extends Animal {
             Engine.rabbitCount--;
             return false;
         }
-        if (energy < (MAX_ENERGY>>1) && xRandom.getBoolean(Animal.PROBABLY_OF_SLEEPING)) sleep(); else move(0, 0);
+        if (energy < (MAX_ENERGY>>1) && xRandom.getBoolean(AnimalPrimitive.PROBABLY_OF_SLEEPING)) sleep(); else move(0, 0);
         return true;
     }
 

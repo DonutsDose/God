@@ -1,12 +1,14 @@
 package code.GUI.World;
 
 import code.GUI.Map.Map;
+import code.Logic.Objects.Bear;
 import code.Logic.Objects.Plant;
 import code.MyMath.Point;
 import code.MyMath.xMath;
 import code.MyMath.xRandom;
 
 import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -25,16 +27,18 @@ public class WorldCreator {
     private static final int GROUND_WIDTH = 4;
     private static final int WATER_WIDTH = 4;
     private static final int PROBABLY_OF_CREATING_TREE = 60;
-    private static final int KIWI_COUNT = 6;
-    private static final int APPLE_COUNT = 10;
+    private static final int KIWI_COUNT = 8;
+    private static final int APPLE_COUNT = 20;
     private static final int BANANA_COUNT = 7;
-    private static final int STRAWBERRY_COUNT = 5;
-    private static final int PEAR_COUNT = 7;
+    private static final int STRAWBERRY_COUNT = 10;
+    private static final int PEAR_COUNT = 10;
     private static final int LEMON_COUNT = 3;
     private static final int ORANGE_COUNT = 7;
     private static final int BLUEBERRY_COUNT = 8;
     private static final int COCONUT_COUNT = 6;
     private static final int BELLADONNA_COUNT = 6;
+    public static final int BEARS_COUNT = 4;
+    private static final int BEARS_AREA = 6;
 
     public static World createWorld() {
         world = new World();
@@ -45,31 +49,45 @@ public class WorldCreator {
         addGrass();
         addWaterHigh();
         addFreshWater();
-        world.initEmptyGrass();
+        world.initGrass();
         world.initWaterHigh();
         world.initGroundHigh();
         addPlants();
+        addBears();
         return world;
     }
 
-    private static void addPlants() {
-        addPlant(KIWI_COUNT, Plant.PLANT_COLOR_KIWI, Plant.CREATURE_PLANT_KIWI, Plant.PERIOD_OF_PREGNANCY_KIWI, Plant.MIN_REPRODUCT_KIWI, Plant.MAX_REPRODUCT_KIWI, Plant.PLANT_CALORIES_KIWI);
-        addPlant(APPLE_COUNT, Plant.PLANT_COLOR_APPLE, Plant.CREATURE_PLANT_APPLE, Plant.PERIOD_OF_PREGNANCY_APPLE, Plant.MIN_REPRODUCT_APPLE, Plant.MAX_REPRODUCT_APPLE, Plant.PLANT_CALORIES_APPLE);
-        addPlant(BANANA_COUNT, Plant.PLANT_COLOR_BANANA, Plant.CREATURE_PLANT_BANANA, Plant.PERIOD_OF_PREGNANCY_BANANA, Plant.MIN_REPRODUCT_BANANA, Plant.MAX_REPRODUCT_BANANA, Plant.PLANT_CALORIES_BANANA);
-        addPlant(STRAWBERRY_COUNT, Plant.PLANT_COLOR_STRAWBERRY, Plant.CREATURE_PLANT_STRAWBERRY, Plant.PERIOD_OF_PREGNANCY_STRAWBERRY, Plant.MIN_REPRODUCT_STRAWBERRY, Plant.MAX_REPRODUCT_STRAWBERRY, Plant.PLANT_CALORIES_STRAWBERRY);
-        addPlant(PEAR_COUNT, Plant.PLANT_COLOR_PEAR, Plant.CREATURE_PLANT_PEAR, Plant.PERIOD_OF_PREGNANCY_PEAR, Plant.MIN_REPRODUCT_PEAR, Plant.MAX_REPRODUCT_PEAR, Plant.PLANT_CALORIES_PEAR);
-        addPlant(LEMON_COUNT, Plant.PLANT_COLOR_LEMON, Plant.CREATURE_PLANT_LEMON, Plant.PERIOD_OF_PREGNANCY_LEMON, Plant.MIN_REPRODUCT_LEMON, Plant.MAX_REPRODUCT_LEMON, Plant.PLANT_CALORIES_LEMON);
-        addPlant(ORANGE_COUNT, Plant.PLANT_COLOR_ORANGE, Plant.CREATURE_PLANT_ORANGE, Plant.PERIOD_OF_PREGNANCY_ORANGE, Plant.MIN_REPRODUCT_ORANGE, Plant.MAX_REPRODUCT_ORANGE, Plant.PLANT_CALORIES_ORANGE);
-        addPlant(BLUEBERRY_COUNT, Plant.PLANT_COLOR_BLUEBERRY, Plant.CREATURE_PLANT_BLUEBERRY, Plant.PERIOD_OF_PREGNANCY_BLUEBERRY, Plant.MIN_REPRODUCT_BLUEBERRY, Plant.MAX_REPRODUCT_ORANGE, Plant.PLANT_CALORIES_BLUEBERRY);
-        addPlant(COCONUT_COUNT, Plant.PLANT_COLOR_COCONUT, Plant.CREATURE_PLANT_COCONUT, Plant.PERIOD_OF_PREGNANCY_COCONUT, Plant.MIN_REPRODUCT_COCONUT, Plant.MAX_REPRODUCT_COCONUT, Plant.PLANT_CALORIES_COCONUT);
-        addPlant(BELLADONNA_COUNT, Plant.PLANT_COLOR_BELLADONNA, Plant.CREATURE_PLANT_BELLADONNA, Plant.PERIOD_OF_PREGNANCY_BELLADONNA, Plant.MIN_REPRODUCT_BELLADONNA, Plant.MAX_REPRODUCT_BELLADONNA, Plant.PLANT_CALORIES_ORANGE);
+    private static void addBears() {
+        Point pt = world.getEmptyGrass();
+        LinkedList<Point> place = new LinkedList();
+        for (int i=pt.getX() - BEARS_AREA; i<=pt.getX() + BEARS_AREA; i++)
+            for (int j=pt.getY() - BEARS_AREA; j<=pt.getY() + BEARS_AREA; j++)
+                if (xMath.inMap(i, j) && Map.passabilityBear[world.landscape[i][j]] != -1 && world.checkEmptyPosition(i, j)) place.add(new Point(i, j));
+        for (int i=1; i<=BEARS_COUNT; i++) {
+            int index = xRandom.getIntInRange(0, place.size() - 1);
+            world.creatures.add(new Bear(place.get(index), (i <= BEARS_COUNT / 2)));
+            place.remove(index);
+        }
     }
 
-    private static void addPlant(int count, int color, int type, int PERIOD_OF_PREGNANT, int MIN_REPRODUCT, int MAX_REPRODUCT, int calories) {
+    private static void addPlants() {
+        addPlant(KIWI_COUNT, Plant.PLANT_COLOR_KIWI, Plant.CREATURE_PLANT_KIWI, Plant.PERIOD_OF_PREGNANCY_KIWI, Plant.PLANT_CALORIES_KIWI);
+        addPlant(APPLE_COUNT, Plant.PLANT_COLOR_APPLE, Plant.CREATURE_PLANT_APPLE, Plant.PERIOD_OF_PREGNANCY_APPLE, Plant.PLANT_CALORIES_APPLE);
+        addPlant(BANANA_COUNT, Plant.PLANT_COLOR_BANANA, Plant.CREATURE_PLANT_BANANA, Plant.PERIOD_OF_PREGNANCY_BANANA, Plant.PLANT_CALORIES_BANANA);
+        addPlant(STRAWBERRY_COUNT, Plant.PLANT_COLOR_STRAWBERRY, Plant.CREATURE_PLANT_STRAWBERRY, Plant.PERIOD_OF_PREGNANCY_STRAWBERRY, Plant.PLANT_CALORIES_STRAWBERRY);
+        addPlant(PEAR_COUNT, Plant.PLANT_COLOR_PEAR, Plant.CREATURE_PLANT_PEAR, Plant.PERIOD_OF_PREGNANCY_PEAR, Plant.PLANT_CALORIES_PEAR);
+        addPlant(LEMON_COUNT, Plant.PLANT_COLOR_LEMON, Plant.CREATURE_PLANT_LEMON, Plant.PERIOD_OF_PREGNANCY_LEMON, Plant.PLANT_CALORIES_LEMON);
+        addPlant(ORANGE_COUNT, Plant.PLANT_COLOR_ORANGE, Plant.CREATURE_PLANT_ORANGE, Plant.PERIOD_OF_PREGNANCY_ORANGE, Plant.PLANT_CALORIES_ORANGE);
+        addPlant(BLUEBERRY_COUNT, Plant.PLANT_COLOR_BLUEBERRY, Plant.CREATURE_PLANT_BLUEBERRY, Plant.PERIOD_OF_PREGNANCY_BLUEBERRY, Plant.PLANT_CALORIES_BLUEBERRY);
+        addPlant(COCONUT_COUNT, Plant.PLANT_COLOR_COCONUT, Plant.CREATURE_PLANT_COCONUT, Plant.PERIOD_OF_PREGNANCY_COCONUT, Plant.PLANT_CALORIES_COCONUT);
+        addPlant(BELLADONNA_COUNT, Plant.PLANT_COLOR_BELLADONNA, Plant.CREATURE_PLANT_BELLADONNA, Plant.PERIOD_OF_PREGNANCY_BELLADONNA, Plant.PLANT_CALORIES_ORANGE);
+    }
+
+    private static void addPlant(int count, int color, int type, int PERIOD_OF_PREGNANT, int calories) {
         for (int i=1; i<=count; i++)
             if (xRandom.getBoolean(PROBABLY_OF_CREATING_TREE)) {
                 Point pt = world.getEmptyGrass();
-                world.plants.add(new Plant(pt.getX(), pt.getY(), color, type, PERIOD_OF_PREGNANT, MIN_REPRODUCT, MAX_REPRODUCT, calories));
+                world.creatures.add(new Plant(pt, color, type, PERIOD_OF_PREGNANT, calories));
             }
     }
 

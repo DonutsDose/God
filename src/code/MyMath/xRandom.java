@@ -16,7 +16,7 @@ public class xRandom {
     }
 
     public static boolean getBoolean(int probably) {
-        probably = Math.min(Math.max(probably, 1), 100);
+        probably = Math.min(Math.max(probably, 0), 100);
         return (random.nextInt(100) + 1 <= probably);
     }
 }

@@ -1,6 +1,7 @@
 package code.GUI.Event;
 
 import code.GUI.Formatter.Formatter;
+import code.Logic.Engine.Engine;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -32,8 +33,8 @@ public class EventPanel extends JScrollPane {
         setViewportView(events);
     }
 
-    public void update(int days, String event) {
-        ((DefaultListModel<String>)events.getModel()).addElement(formatEvent(days, event));
+    public void update(String event) {
+        ((DefaultListModel<String>)events.getModel()).addElement(formatEvent(Engine.date, event));
         int lastIndex = events.getModel().getSize() - 1;
         if (lastIndex >= 0) {
             events.ensureIndexIsVisible(lastIndex);

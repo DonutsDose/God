@@ -1,5 +1,7 @@
 package code.GUI.Map;
 
+import code.GUI.World.World;
+
 /**
  * Created by DonutsDose-PC on 22.06.2017.
  */
@@ -13,7 +15,6 @@ public class MapRender {
     private final static int LANDSCAPE_COLOR_GROUND_HIGH = 0xD1AF7D;
     private final static int LANDSCAPE_COLOR_GRASS       = 0xB3D77E;
     private final static int LANDSCAPE_COLOR_FRESH_WATER = 0x6699FF;
-    private final static int LANDSCAPE_COLOR_TREE        = 0x22B14C;
 
     public static int[][] background = new int[Map.MAP_HIGHT][Map.MAP_WIDTH];
     public static int[][] foreground = new int[Map.MAP_HIGHT][Map.MAP_WIDTH];
@@ -36,18 +37,13 @@ public class MapRender {
     }
 
     private static void updateForeground() {
-        for (int i=0; i<Map.world.plants.size(); i++)
-            if (Map.world.plants.get(i).product) foreground[Map.world.plants.get(i).x][Map.world.plants.get(i).y] = Map.world.plants.get(i).color;
-        for (int i=0; i<Map.world.animals.size(); i++)
-            foreground[Map.world.animals.get(i).x][Map.world.animals.get(i).y] = Map.world.animals.get(i).color;
+        for (int i = 0; i < Map.world.creatures.size(); i++)
+            foreground[Map.world.creatures.get(i).pos.getX()][Map.world.creatures.get(i).pos.getY()] = Map.world.creatures.get(i).color;
     }
 
     private static void updateValue() {
-        for (int i=0; i<Map.world.plants.size(); i++)
-            if (Map.world.plants.get(i).product) value[Map.world.plants.get(i).x][Map.world.plants.get(i).y] = 't'; else
-                value[Map.world.plants.get(i).x][Map.world.plants.get(i).y] = 'T';
-        for (int i=0; i<Map.world.animals.size(); i++)
-            value[Map.world.animals.get(i).x][Map.world.animals.get(i).y] = Map.world.animals.get(i).face;
+        for (int i = 0; i < Map.world.creatures.size(); i++)
+            value[Map.world.creatures.get(i).pos.getX()][Map.world.creatures.get(i).pos.getY()] = Map.world.creatures.get(i).face;
     }
 
     private static int getBackgroundColor(int data) {

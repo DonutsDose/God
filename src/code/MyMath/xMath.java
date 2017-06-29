@@ -11,5 +11,18 @@ public class xMath {
         return (x >= 0 && y >= 0 && x < Map.MAP_HIGHT && y < Map.MAP_WIDTH);
     }
 
+    public static Point pointMinDist(Point st, Point a, Point b) {
+        int distA = dist(st, a);
+        int distB = dist(st, b);
+        if (distA < distB) return a; else return b;
+    }
+
+    public static int dist(Point a, Point b) {
+        return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY()  - b.getY());
+    }
+
+    public static int maxDist(Point a, Point b) {
+        return Math.max(Math.abs(a.getX() - b.getX()), Math.abs(a.getY() - b.getY()));
+    }
 
 }

@@ -1,6 +1,7 @@
 package code.Logic.Abstract;
 
 import code.GUI.Map.Map;
+import code.MyMath.Point;
 import code.MyMath.xMath;
 import code.MyMath.xRandom;
 
@@ -10,49 +11,52 @@ import code.MyMath.xRandom;
 
 abstract public class AnimalPrimitive extends Creature {
 
-    protected static final int MIN_ENERGY = 10;
     protected static final int PROBABLY_OF_SLEEPING = 45;
 
-    protected static final int CREATURE_ANIMAL_FISH = 11;
-    protected static final int CREATURE_ANIMAL_RABBIT = 12;
+    public static final int CREATURE_ANIMAL_FISH = 11;
+    public static final int CREATURE_ANIMAL_RABBIT = 12;
 
-    protected boolean[] ration = new boolean[Map.MAX_CREATURE_TYPE];
-    protected int[] passability = new int[Map.MAX_LANDSCAPE_TYPE];
-    protected int MAX_ENERGY, energy, satiety, MAX_SATIETY;
+    protected int energy, MAX_ENERGY;
 
-    public AnimalPrimitive(int x, int y, char face, int color, int type, int PERIOD_OF_PREGNANT, int MAX_ENERGY, int MAX_SATIETY, int PROBABLY_DIE) {
-        super(x, y, face, color, type, PERIOD_OF_PREGNANT, PROBABLY_DIE);
+    public AnimalPrimitive(Point pos, char face, int color, int type, int PERIOD_OF_PREGNANT, int MAX_ENERGY, int PROBABLY_DIE, boolean sex, int calories) {
+        super(pos, face, color, type, PERIOD_OF_PREGNANT, PROBABLY_DIE, sex, calories);
         this.MAX_ENERGY = MAX_ENERGY;
-        this.MAX_SATIETY = MAX_SATIETY;
         energy = MAX_ENERGY;
-        for (int i=0; i<Map.MAX_CREATURE_TYPE; i++) ration[i] = false;
-        for (int i=0; i<Map.MAX_LANDSCAPE_TYPE; i++) passability[i] = -1;
-        setPassability();
     }
 
-    abstract protected void setPassability();
+    protected void moveQuietly() {
+        int xShift = xRandom.getIntInRange(-1, 1);
+        int yShift = xRandom.getIntInRange(-1, 1);
+        if (xShift == 0 && yShift == 0) {
+            sleep();
+            return;
+        }
+        Point to = new Point(pos.getX() + xShift, pos.getY() + yShift);
+        if (!move(to)) sleep();
+    }
 
-    protected void move(int xShift, int yShift) {
-        if (xShift == 0 && yShift == 0) {
-            xShift = xRandom.getIntInRange(-1, 1);
-            yShift = xRandom.getIntInRange(-1, 1);
-        }
-        if (xShift == 0 && yShift == 0) {
-            sleep();
-            return;
-        }
-        int xTo = x + xShift;
-        int yTo = y + yShift;
-        if (!xMath.inMap(xTo, yTo) || passability[Map.world.landscape[xTo][yTo]] == -1 || !Map.checkEmptyPosition(xTo, yTo) ||
-                passability[Map.world.landscape[xTo][yTo]] > energy) {
-            sleep();
-            return;
-        }
-        x = xTo;
-        y = yTo;
-        energy -= passability[Map.world.landscape[xTo][yTo]];
+    protected boolean move(Point to) {
+        if (!xMath.inMap(to.getX(), to.getY()) || !canPass(to) || !Map.world.checkEmptyPosition(to.getX(), to.getY()) ||
+                getPass(to) > energy) return false;
+        pos = to;
+        energy -= getPass(to);
+        return true;
     }
 
     abstract protected void sleep();
+
+    abstract public int getPass(int x, int y);
+
+    public int getPass(Point pt) {
+        return getPass(pt.getX(), pt.getY());
+    }
+
+    public boolean canPass(int x, int y) {
+        return (getPass(x, y) != -1);
+    }
+
+    public boolean canPass(Point pt) {
+        return canPass(pt.getX(), pt.getY());
+    }
 
 }

@@ -3,6 +3,7 @@ package code.Logic.Objects;
 import code.GUI.Map.Map;
 import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Engine.Engine;
+import code.MyMath.Point;
 import code.MyMath.xRandom;
 
 /**
@@ -12,33 +13,37 @@ public class Rabbit extends AnimalPrimitive {
 
     private static final char RABBIT_FACE = '\u066D';
     private static final int RABBIT_COLOR = 0x696969;
-    private static final int RABBIT_PROBABLY_DIE = 800;
+    private static final int RABBIT_PROBABLY_DIE = 80;
     private static final int RABBIT_MAX_ENERGY = 300;
+    private static final int RABBIT_CALORIES = 36000;
 
-    public Rabbit(int x, int y) {
-        super(x, y, RABBIT_FACE, RABBIT_COLOR, CREATURE_ANIMAL_RABBIT, 0, RABBIT_MAX_ENERGY, 0, RABBIT_PROBABLY_DIE);
-        Engine.rabbitCount++;
+
+    public Rabbit(Point pt) {
+        super(pt, RABBIT_FACE, RABBIT_COLOR, CREATURE_ANIMAL_RABBIT, 0, RABBIT_MAX_ENERGY, RABBIT_PROBABLY_DIE, false, RABBIT_CALORIES);
     }
 
     @Override
     public boolean act() {
-        if (!super.act()) {
-            Engine.rabbitCount--;
-            return false;
-        }
-        if (energy < (MAX_ENERGY>>1) && xRandom.getBoolean(AnimalPrimitive.PROBABLY_OF_SLEEPING)) sleep(); else move(0, 0);
+        if (!super.act()) return false;
+        if (energy < (MAX_ENERGY>>1) && xRandom.getBoolean(AnimalPrimitive.PROBABLY_OF_SLEEPING)) sleep(); else moveQuietly();
         return true;
-    }
-
-    @Override
-    protected void setPassability() {
-        passability[Map.LANDSCAPE_GROUND_LOW] = 25;
-        passability[Map.LANDSCAPE_GROUND_HIGH] = 35;
-        passability[Map.LANDSCAPE_GROUND_HIGH] = 40;
     }
 
     @Override
     protected void sleep() {
         energy = MAX_ENERGY;
+    }
+
+    @Override
+    public void eaten() {}
+
+    @Override
+    public boolean canBeEaten() {
+        return true;
+    }
+
+    @Override
+    public int getPass(int x, int y) {
+        return Map.passabilityRabbit[Map.world.landscape[x][y]];
     }
 }

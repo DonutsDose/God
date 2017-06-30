@@ -37,7 +37,7 @@ public class WorldCreator {
     private static final int BLUEBERRY_COUNT = 8;
     private static final int COCONUT_COUNT = 6;
     private static final int BELLADONNA_COUNT = 6;
-    public static final int BEARS_COUNT = 4;
+    public static final int BEARS_COUNT = 6;
     private static final int BEARS_AREA = 6;
 
     public static void createWorld() {

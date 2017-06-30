@@ -23,7 +23,7 @@ public class Bear extends AnimalSapiens {
     private static final int BEAR_MAX_ENERGY = 10_000;
     private static final int BEAR_MAX_SATIETY = 5000;
     private static final int BEAR_PROBABLY_TO_DIE = 1000;
-    private static final int BEAR_AREA_OF_VISIBLE = 5;
+    private static final int BEAR_AREA_OF_VISIBLE = 3;
     private static final int BEAR_PRODUCT_AGE = 200;
     private static final int BEAR_DELTA_SATIETY = 25;
 

@@ -19,7 +19,7 @@ public class Fish extends AnimalPrimitive {
     private static final int FISH_MAX_ENERGY = 203;
     private static final char FISH_FACE = '\u037D';
     private static final int FISH_COLOR = 0x336633;
-    private static final int FISH_CALORIES = 2017;
+    private static final int FISH_CALORIES = 1007;
 
 
     public Fish(Point pt) {

@@ -103,8 +103,7 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
         int cnt = xRandom.getIntInRange(0, 4), res = 0;
         for (int i=pos.getX() - 1; i<=pos.getX() + 1; i++)
             for (int j=pos.getY() - 1; j<=pos.getY() + 1; j++) {
-                if (cnt == 0) return;
-                if (xMath.inMap(i, j) && Map.world.checkEmptyPosition(i, j) && canPass(i, j)) {
+                if (cnt > 0 && xMath.inMap(i, j) && Map.world.checkEmptyPosition(i, j) && canPass(i, j)) {
                     Engine.borned.add(new NewAnimal(new Point(i, j), type));
                     cnt--;
                     res++;

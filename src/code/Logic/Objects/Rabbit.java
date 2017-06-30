@@ -17,7 +17,7 @@ public class Rabbit extends AnimalPrimitive {
     private static final int RABBIT_COLOR = 0x696969;
     private static final int RABBIT_PROBABLY_DIE = 80;
     private static final int RABBIT_MAX_ENERGY = 300;
-    private static final int RABBIT_CALORIES = 3600;
+    private static final int RABBIT_CALORIES = 1800;
 
 
     public Rabbit(Point pt) {

@@ -1,5 +1,6 @@
 package code.Logic.Engine;
 
+import code.GUI.Control.ControlPanel;
 import code.GUI.Main.MainPanel;
 import code.GUI.Map.Map;
 import code.GUI.Map.MapRender;
@@ -71,7 +72,7 @@ public class Engine{
     }
 
     public static void updateMapInfo() {
-        MainPanel.mapInfoPanel.update(date, "<html>Fish: " + fishCount  + "<br> Rabbit: " + rabbitCount + "<br> Bear: " + bearCount + "<br> isSelected: " + existSelected + "</html>");
+        MainPanel.mapInfoPanel.update(date, "<html>Fish: " + fishCount  + "<br> Rabbit: " + rabbitCount + "<br> Bear: " + bearCount + "<br> Locked flag: " + existSelected + "</html>");
     }
 
     private static void death() {

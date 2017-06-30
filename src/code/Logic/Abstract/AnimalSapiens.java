@@ -32,9 +32,15 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
 
     @Override
     public boolean act() {
-        if (!super.act()) return false;
+        if (!super.act()) {
+            event("Died of old age.");
+            return false;
+        }
         satiety -= DELTA_SATIETY;
-        if (satiety < 0) return false;
+        if (satiety < 0) {
+            event("Died of hunger.");
+            return false;
+        }
         if (readyToReproduct > 0) readyToReproduct--;
         if (pregnant && readyToReproduct == 0) {
             pregnant = false;
@@ -78,7 +84,10 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
         //-----------------
         if (((satiety * 3) >> 1) < MAX_SATIETY) {
             if (eatIndex != -1) {
-                if (!tryToEat(eat, eatIndex)) return false;
+                if (!tryToEat(eat, eatIndex)) {
+                    event("Deid by poisoning plants");
+                    return false;
+                }
             } else moveQuietly();
             return true;
         }
@@ -96,6 +105,7 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
             for (int j=pos.getY() - 1; j<=pos.getY() + 1; j++) {
                 if (cnt == 0) return;
                 if (xMath.inMap(i, j) && Map.world.checkEmptyPosition(i, j) && canPass(i, j)) {
+                    event("New creature.");
                     Engine.borned.add(new NewAnimal(new Point(i, j), type));
                     cnt--;
                 }
@@ -245,4 +255,5 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
     }
 
     abstract protected void initRation();
+    abstract public void event(String msg);
 }

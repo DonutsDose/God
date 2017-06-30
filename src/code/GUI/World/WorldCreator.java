@@ -54,6 +54,7 @@ public class WorldCreator {
         world.initGroundHigh();
         addPlants();
         addBears();
+        world.initRef();
         return world;
     }
 

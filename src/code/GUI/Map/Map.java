@@ -40,7 +40,7 @@ public class Map extends JTable {
 
     public static final int FISH_CREATING_PROBABLY = 15;
     public static final int FISH_CREATING_COUNT = 5;
-    public static final int RABBIT_CREATING_PROBABLY = 10;
+    public static final int RABBIT_CREATING_PROBABLY = 20;
     public static final int RABBIT_CREATING_COUNT = 2;
     
     public static int[] passabilityFish = new int[MAX_LANDSCAPE_TYPE + 1];

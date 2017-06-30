@@ -5,6 +5,7 @@ import code.GUI.Map.Map;
 import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Engine.Engine;
 import code.MyMath.Point;
+import code.MyMath.xMath;
 import code.MyMath.xRandom;
 
 /**
@@ -33,7 +34,7 @@ public class Rabbit extends AnimalPrimitive {
 
     @Override
     public String getInformation() {
-        return String.format("<html>Type: Rabbit<br>Age: %s<br>Energy: %s</html>", Formatter.formatDate(age), energy);
+        return String.format("<html>Type: Rabbit<br>Age: %s<br>Energy: %s %%</html>", Formatter.formatDate(age), xMath.percent(RABBIT_MAX_ENERGY, energy));
     }
 
     @Override

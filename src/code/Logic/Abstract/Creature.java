@@ -45,6 +45,7 @@ abstract public class Creature {
         if (isSelected) {
             isSelected = false;
             Engine.selected = null;
+            Engine.existSelected = false;
         }
         return false;
     }

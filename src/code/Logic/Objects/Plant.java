@@ -62,6 +62,9 @@ public class Plant extends Creature {
     public static final int PROBABLY_TO_REPRODUCT = 65;
     public static final int PRODUCT_OVER = 10;
 
+    private static final char PRODUCT_FACE = 't';
+    private static final char NON_PRODUCT_FACE = 'T';
+
     private int productOver = 0, productColor;
     public boolean product = false;
 
@@ -79,6 +82,13 @@ public class Plant extends Creature {
             return death();
         }
         reproductFunction();
+        if (product) {
+            NORMAL_FACE = PRODUCT_FACE;
+            color = productColor;
+        } else {
+            NORMAL_FACE = NON_PRODUCT_FACE;
+            color = 0;
+        }
         return ok();
     }
 
@@ -91,13 +101,6 @@ public class Plant extends Creature {
             }
             readyToReproduct = PERIOD_OF_PREGNANT;
         } else readyToReproduct--;
-        if (product) {
-            face = 't';
-            color = productColor;
-        } else {
-            face = 'T';
-            color = 0;
-        }
     }
 
     @Override

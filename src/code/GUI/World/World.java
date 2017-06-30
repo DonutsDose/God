@@ -18,12 +18,21 @@ public class World {
 
     public int[][] landscape = new int[Map.MAP_HIGHT][Map.MAP_WIDTH];
     public boolean[] exist = new boolean[MAX_OBJECT_COUNT];
+    public Creature[][] ref = new Creature[Map.MAP_HIGHT][Map.MAP_WIDTH];
 
     public LinkedList<Creature> creatures = new LinkedList();
 
     public LinkedList<Point> grass = new LinkedList();
     public LinkedList<Point> waterHigh = new LinkedList();
     public LinkedList<Point> groundHigh = new LinkedList();
+
+    public void initRef() {
+        for (int i=0; i<Map.MAP_HIGHT; i++)
+            for (int j=0; j<Map.MAP_WIDTH; j++)
+                ref[i][j] = null;
+        for (int i=0; i<creatures.size(); i++)
+            ref[creatures.get(i).pos.getX()][creatures.get(i).pos.getY()] = creatures.get(i);
+    }
 
     public void initGroundHigh() {
         for (int i=0; i<Map.MAP_HIGHT; i++)

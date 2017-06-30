@@ -25,4 +25,8 @@ public class xMath {
         return Math.max(Math.abs(a.getX() - b.getX()), Math.abs(a.getY() - b.getY()));
     }
 
+    public static float percent(int max, int value) {
+        return ((float)value * 100f / max);
+    }
+
 }

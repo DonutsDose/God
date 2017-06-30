@@ -1,10 +1,13 @@
 package code.Logic.Objects;
 
+import code.GUI.Control.ControlPanel;
 import code.GUI.Formatter.Formatter;
+import code.GUI.Main.MainPanel;
 import code.GUI.Map.Map;
 import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Engine.Engine;
 import code.MyMath.Point;
+import code.MyMath.xMath;
 import code.MyMath.xRandom;
 
 /**
@@ -32,7 +35,7 @@ public class Fish extends AnimalPrimitive {
 
     @Override
     public String getInformation() {
-        return String.format("<html>Type: Fish<br>Age: %s<br>Energy: %s</html>", Formatter.formatDate(age), energy);
+        return String.format("<html>Type: Fish<br>Age: %s<br>Energy: %s %%</html>", Formatter.formatDate(age), xMath.percent(FISH_MAX_ENERGY, energy));
     }
 
     @Override

@@ -7,6 +7,7 @@ import code.GUI.Map.Map;
 import code.GUI.Map.MapInfoPanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by DonutsDose-PC on 20.06.2017.
@@ -46,6 +47,7 @@ public class MainPanel extends JPanel {
         mapInfoPanel = new MapInfoPanel();
         eventPanel = new EventPanel();
         cellInfoPanel = new CellInfoPanel();
+        leftPanel.setPreferredSize(new Dimension(57, 100));
         leftPanel.add(mapInfoPanel);
         leftPanel.add(cellInfoPanel);
         leftPanel.add(new ControlPanel());

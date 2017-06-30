@@ -16,22 +16,43 @@ public class World {
 
     public static final int MAX_OBJECT_COUNT = 300;
 
-    public int[][] landscape = new int[Map.MAP_HIGHT][Map.MAP_WIDTH];
-    public boolean[] exist = new boolean[MAX_OBJECT_COUNT];
-    public Creature[][] ref = new Creature[Map.MAP_HIGHT][Map.MAP_WIDTH];
+    public int[][] landscape;
+    public boolean[] exist;
+    public Creature[][] ref;
 
-    public LinkedList<Creature> creatures = new LinkedList();
+    public LinkedList<Creature> creatures;
 
-    public LinkedList<Point> grass = new LinkedList();
-    public LinkedList<Point> waterHigh = new LinkedList();
-    public LinkedList<Point> groundHigh = new LinkedList();
+    public LinkedList<Point> grass;
+    public LinkedList<Point> waterHigh;
+    public LinkedList<Point> groundHigh;
+
+    public World() {
+        landscape = new int[Map.MAP_HIGHT][Map.MAP_WIDTH];
+        exist = new boolean[MAX_OBJECT_COUNT];
+        creatures = new LinkedList();
+        grass = new LinkedList();
+        waterHigh = new LinkedList();
+        groundHigh = new LinkedList();
+    }
 
     public void initRef() {
+        ref = new Creature[Map.MAP_HIGHT][Map.MAP_WIDTH];
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
                 ref[i][j] = null;
-        for (int i=0; i<creatures.size(); i++)
-            ref[creatures.get(i).pos.getX()][creatures.get(i).pos.getY()] = creatures.get(i);
+    }
+
+    public void reset() {
+        for (int i=0; i<Map.MAP_HIGHT; i++)
+            for (int j=0; j<Map.MAP_WIDTH; j++) {
+                landscape[i][j] = 0;
+                ref = null;
+            }
+        for (int i=0; i<MAX_OBJECT_COUNT; i++) exist[i] = false;
+        creatures.clear();
+        grass.clear();
+        waterHigh.clear();
+        groundHigh.clear();
     }
 
     public void initGroundHigh() {
@@ -109,9 +130,7 @@ public class World {
     }
 
     public boolean checkEmptyPosition(int x, int y) {
-        for (int i=0; i<creatures.size(); i++)
-            if (creatures.get(i).pos.getX() == x && creatures.get(i).pos.getY() == y) return false;
-        return true;
+        return (ref[x][y] == null);
     }
 
     public boolean checkEmptyPosition(Point pt) {

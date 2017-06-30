@@ -40,8 +40,8 @@ public class WorldCreator {
     public static final int BEARS_COUNT = 4;
     private static final int BEARS_AREA = 6;
 
-    public static World createWorld() {
-        world = new World();
+    public static void createWorld() {
+        world = Map.world;
         addWater();
         addGroundHigh();
         smoothing();
@@ -52,10 +52,9 @@ public class WorldCreator {
         world.initGrass();
         world.initWaterHigh();
         world.initGroundHigh();
+        world.initRef();
         addPlants();
         addBears();
-        world.initRef();
-        return world;
     }
 
     private static void addBears() {

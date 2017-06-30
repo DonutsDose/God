@@ -47,9 +47,10 @@ public class Map extends JTable {
     public static int[] passabilityRabbit = new int[MAX_LANDSCAPE_TYPE + 1];
     public static int[] passabilityBear = new int[MAX_LANDSCAPE_TYPE + 1];
 
-    public static World world = null;
+    public static World world;
 
     public Map() {
+        world = new World();
         initPassability();
         setupView();
         setupMap();
@@ -75,9 +76,7 @@ public class Map extends JTable {
     }
 
     public static Creature findCreature(int x, int y) {
-        for (int i=0; i<Map.world.creatures.size(); i++)
-            if (Map.world.creatures.get(i).pos.getX() == x && Map.world.creatures.get(i).pos.getY() == y) return Map.world.creatures.get(i);
-        return null;
+        return world.ref[x][y];
     }
 
     private static String getLandscape(int type) {
@@ -131,7 +130,8 @@ public class Map extends JTable {
     }
 
     public void setupMap() {
-        world = WorldCreator.createWorld();
+        world.reset();
+        WorldCreator.createWorld();
         MapRender.setBackground();
         MapRender.update();
     }

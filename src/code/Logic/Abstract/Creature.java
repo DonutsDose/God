@@ -33,6 +33,7 @@ abstract public class Creature {
         this.PROBABLY_DIE = PROBABLY_DIE;
         this.PERIOD_OF_PREGNANT = PERIOD_OF_PREGNANT;
         this.NORMAL_FACE = NORMAL_FACE;
+        Map.world.ref[pos.getX()][pos.getY()] = this;
     }
 
     public boolean act() {
@@ -47,6 +48,7 @@ abstract public class Creature {
             Engine.selected = null;
             Engine.existSelected = false;
         }
+        Map.world.ref[pos.getX()][pos.getY()] = null;
         return false;
     }
 

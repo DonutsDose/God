@@ -38,9 +38,19 @@ abstract public class AnimalPrimitive extends Creature {
     protected boolean move(Point to) {
         if (!xMath.inMap(to.getX(), to.getY()) || !canPass(to) || !Map.world.checkEmptyPosition(to.getX(), to.getY()) ||
                 getPass(to) > energy) return false;
-        pos = to;
+        moveTo(to);
         energy -= getPass(to);
         return true;
+    }
+
+    protected void moveTo(Point to) {
+        Map.world.ref[pos.getX()][pos.getY()] = null;
+        Map.world.ref[to.getX()][to.getY()] = this;
+        pos = to;
+    }
+
+    protected boolean move(int x, int y) {
+        return move(new Point(x, y));
     }
 
     abstract protected void sleep();

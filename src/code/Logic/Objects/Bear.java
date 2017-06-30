@@ -17,7 +17,7 @@ public class Bear extends AnimalSapiens {
 
     private static final char BEAR_FACE = 'B';
     private static final int BEAR_COLOR_MEN = 0x920066;
-    private static final int BEAR_COLOR_WOMEN = 0x45161C;
+    private static final int BEAR_COLOR_WOMEN = 0x45160C;
     private static final int BEAR_COLOR_PREGNANT = 0xFF3333;
     private static final int BEAR_PERIOD_OF_PREGNANT = 330;
     private static final int BEAR_MAX_ENERGY = 10_000;

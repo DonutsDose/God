@@ -1,5 +1,6 @@
 package code.Logic.Objects;
 
+import code.GUI.Formatter.Formatter;
 import code.GUI.Map.Map;
 import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Engine.Engine;
@@ -15,7 +16,7 @@ public class Fish extends AnimalPrimitive {
     private static final int FISH_MAX_ENERGY = 203;
     private static final char FISH_FACE = '\u037D';
     private static final int FISH_COLOR = 0x336633;
-    private static final int FISH_CALORIES = 20170;
+    private static final int FISH_CALORIES = 2017;
 
 
     public Fish(Point pt) {
@@ -27,6 +28,11 @@ public class Fish extends AnimalPrimitive {
         if (!super.act()) return false;
         if (energy < (MAX_ENERGY>>1) && xRandom.getBoolean(AnimalPrimitive.PROBABLY_OF_SLEEPING)) sleep(); else moveQuietly();
         return true;
+    }
+
+    @Override
+    public String getInformation() {
+        return String.format("<html>Type: Fish<br>Age: %s<br>Energy: %s</html>", Formatter.formatDate(age), energy);
     }
 
     @Override

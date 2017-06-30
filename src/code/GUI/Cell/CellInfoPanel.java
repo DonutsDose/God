@@ -17,10 +17,18 @@ public class CellInfoPanel extends JPanel {
         setVisible(true);
     }
 
+    public void update(String msg) {
+        info.setText(msg);
+    }
+
+    public void reset() {
+        info.setText("-");
+    }
+
     private void setupView() {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setBorder(new TitledBorder("Cell Info"));
-        setPreferredSize(new Dimension(0, 100));
+        setPreferredSize(new Dimension(0, 150));
     }
 
 

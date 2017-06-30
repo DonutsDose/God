@@ -1,14 +1,18 @@
 package code.GUI.Map;
 
 import code.GUI.Cell.CellRenderer;
+import code.GUI.Main.MainPanel;
 import code.GUI.World.World;
 import code.GUI.World.WorldCreator;
 import code.Logic.Abstract.Creature;
 import code.MyMath.Point;
+import sun.applet.Main;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by DonutsDose-PC on 20.06.2017.
@@ -42,13 +46,44 @@ public class Map extends JTable {
     public static int[] passabilityRabbit = new int[MAX_LANDSCAPE_TYPE + 1];
     public static int[] passabilityBear = new int[MAX_LANDSCAPE_TYPE + 1];
 
-    public static World world = null;
+    public static World world = null, worldCopy = null;
 
     public Map() {
         initPassability();
         setupView();
         setupMap();
+        setupListeners();
         setVisible(true);
+    }
+
+    private void setupListeners() {
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int x = rowAtPoint(e.getPoint());
+                int y = columnAtPoint(e.getPoint());
+                int creature = -1;
+                for (int i=0; i<Map.world.creatures.size(); i++)
+                    if (Map.world.creatures.get(i).pos.getX() == x && Map.world.creatures.get(i).pos.getY() == y) {
+                        creature = i;
+                        break;
+                    }
+                String msg = String.format("<html>x: %s y: %s<br>Landscape: %s<br>%s</html>", x, y, getLandscape(world.landscape[x][y]), creature == -1 ? "No objects -----------" : Map.world.creatures.get(creature).getInformation());
+                MainPanel.cellInfoPanel.update(msg);
+            }
+        });
+    }
+
+    private String getLandscape(int type) {
+        switch (type) {
+            case LANDSCAPE_FRESH_WATER : return "Frash water";
+            case LANDSCAPE_WATER_HIGH : return "Water high";
+            case LANDSCAPE_WATER_LOW : return "Water low";
+            case LANDSCAPE_GRASS : return "Grass";
+            case LANDSCAPE_GROUND_HIGH : return "Ground high";
+            case LANDSCAPE_GROUND_LOW : return "Ground low";
+        }
+        return "-";
     }
     
     private void initPassability() {
@@ -91,8 +126,23 @@ public class Map extends JTable {
 
     public void setupMap() {
         world = WorldCreator.createWorld();
+        worldCopy = world;
+        copyWorld();
         MapRender.setBackground();
         MapRender.update();
+    }
+
+    public void reloadMap() {
+        world = worldCopy;
+    }
+
+    public void copyWorld() {
+        worldCopy.landscape = world.landscape.clone();
+        worldCopy.exist = world.exist.clone();
+        worldCopy.creatures = world.creatures;
+        worldCopy.grass = world.grass;
+        worldCopy.waterHigh = world.waterHigh;
+        worldCopy.groundHigh = world.groundHigh;
     }
 
     public static int getType(Creature obj) {

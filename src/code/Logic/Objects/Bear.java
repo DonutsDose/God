@@ -1,5 +1,6 @@
 package code.Logic.Objects;
 
+import code.GUI.Formatter.Formatter;
 import code.GUI.Main.MainPanel;
 import code.GUI.Map.Map;
 import code.Logic.Abstract.AnimalPrimitive;
@@ -13,27 +14,36 @@ import code.MyMath.xRandom;
 public class Bear extends AnimalSapiens {
 
     private static final char BEAR_FACE = 'B';
-    private static final int BEAR_COLOR = 0x45161C;
-    private static final int BEAR_PERIOD_OF_PREGNANT = 270;
+    private static final int BEAR_COLOR_MEN = 0x920066;
+    private static final int BEAR_COLOR_WOMEN = 0x45161C;
+    private static final int BEAR_COLOR_PREGNANT = 0xFF3333;
+    private static final int BEAR_PERIOD_OF_PREGNANT = 330;
     private static final int BEAR_MAX_ENERGY = 10_000;
-    private static final int BEAR_MAX_SATIETY = 3000;
-    private static final int BEAR_PROBABLY_TO_DIE = 700;
-    private static final int BEAR_AREA_OF_VISIBLE = 6;
+    private static final int BEAR_MAX_SATIETY = 5000;
+    private static final int BEAR_PROBABLY_TO_DIE = 800;
+    private static final int BEAR_AREA_OF_VISIBLE = 3;
     private static final int BEAR_PRODUCT_AGE = 200;
     private static final int BEAR_DELTA_SATIETY = 20;
 
     public Bear(Point pos, boolean sex) {
-        super(pos, BEAR_FACE, BEAR_COLOR, AnimalSapiens.CREATURE_ANIMAL_BEAR, BEAR_PERIOD_OF_PREGNANT, BEAR_MAX_ENERGY, BEAR_MAX_SATIETY, BEAR_PROBABLY_TO_DIE, sex, BEAR_AREA_OF_VISIBLE, BEAR_PRODUCT_AGE, 0, BEAR_DELTA_SATIETY); //TODO calories
+        super(pos, BEAR_FACE, sex ? BEAR_COLOR_WOMEN : BEAR_COLOR_MEN, AnimalSapiens.CREATURE_ANIMAL_BEAR, BEAR_PERIOD_OF_PREGNANT, BEAR_MAX_ENERGY, BEAR_MAX_SATIETY, BEAR_PROBABLY_TO_DIE, sex, BEAR_AREA_OF_VISIBLE, BEAR_PRODUCT_AGE, 0, BEAR_DELTA_SATIETY); //TODO calories
     }
 
     @Override
     public boolean act() {
-        return super.act();
+        if (!super.act()) return false;
+        if (pregnant) color = BEAR_COLOR_PREGNANT; else color = sex ? BEAR_COLOR_WOMEN : BEAR_COLOR_MEN;
+        return true;
+    }
+
+    @Override
+    public String getInformation() {
+        return String.format("<html>Type: Bear<br>Sex: %s<br>Age: %s<br>Energy: %s<br>Satiety: %s<br>Pregnant: %s<br>Will be able to reproduct after %s</html>", sex ? "man" : "woman", Formatter.formatDate(age), energy, satiety, pregnant, readyToReproduct);
     }
 
     @Override
     protected void sleep() {
-        energy += BEAR_MAX_ENERGY / 2;
+        energy += BEAR_MAX_ENERGY / 5;
     }
 
     @Override

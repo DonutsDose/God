@@ -32,15 +32,9 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
 
     @Override
     public boolean act() {
-        if (!super.act()) {
-            MainPanel.eventPanel.update("Bear died by OLD");
-            return false;
-        }
+        if (!super.act()) return false;
         satiety -= DELTA_SATIETY;
-        if (satiety < 0) {
-            MainPanel.eventPanel.update("Bear died by FAMINE");
-            return false;
-        }
+        if (satiety < 0) return false;
         if (readyToReproduct > 0) readyToReproduct--;
         if (pregnant && readyToReproduct == 0) {
             pregnant = false;
@@ -103,7 +97,6 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
                 if (cnt == 0) return;
                 if (xMath.inMap(i, j) && Map.world.checkEmptyPosition(i, j) && canPass(i, j)) {
                     Engine.borned.add(new NewAnimal(new Point(i, j), type));
-                    MainPanel.eventPanel.update("New Bear");
                     cnt--;
                 }
             }
@@ -140,41 +133,115 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
                 readyToReproduct = PERIOD_OF_PREGNANT;
                 pregnant = true;
             }
-            MainPanel.eventPanel.update("Bear pregnant");
         } else {
             goTo(to);
         }
     }
 
     protected void goTo(Point to) {
-        if (to.getX() == pos.getX()) {
-            if (to.getY() > pos.getY()) tryGoTo(pos.getX(), pos.getY() + 1); else tryGoTo(pos.getX(), pos.getY() - 1);
+        int x = pos.getX(), y = pos.getY();
+        if (to.getX() == x) {
+            if (to.getY() > y) {
+                if (tryGoTo(x, y + 1)) return;
+                if (tryGoTo(x + 1, y + 1)) return;
+                if (tryGoTo(x - 1, y + 1)) return;
+                if (tryGoTo(x - 1, y)) return;
+                if (tryGoTo(x + 1, y)) return;
+                if (tryGoTo(x + 1, y - 1)) return;
+                if (tryGoTo(x - 1, y - 1)) return;
+                tryGoTo(x, y - 1);
+            } else {
+                if (tryGoTo(x, y - 1)) return;
+                if (tryGoTo(x + 1, y - 1)) return;
+                if (tryGoTo(x - 1, y - 1)) return;
+                if (tryGoTo(x + 1, y)) return;
+                if (tryGoTo(x - 1, y)) return;
+                if (tryGoTo(x - 1, y + 1)) return;
+                if (tryGoTo(x + 1, y + 1)) return;
+                tryGoTo(x, y + 1);
+            }
             return;
         }
-        if (to.getY() == pos.getY()) {
-            if (to.getX() > pos.getX()) tryGoTo(pos.getX() + 1, pos.getY()); else tryGoTo(pos.getX() - 1, pos.getY());
+        if (to.getY() == y) {
+            if (to.getX() > x) {
+                if (tryGoTo(x + 1, y)) return;
+                if (tryGoTo(x + 1, y + 1)) return;
+                if (tryGoTo(x + 1, y - 1)) return;
+                if (tryGoTo(x, y - 1)) return;
+                if (tryGoTo(x, y + 1)) return;
+                if (tryGoTo(x - 1, y + 1)) return;
+                if (tryGoTo(x - 1, y - 1)) return;
+                if (tryGoTo(x - 1, y)) return;
+                sleep();
+            } else {
+                if (tryGoTo(x - 1, y)) return;
+                if (tryGoTo(x - 1, y + 1)) return;
+                if (tryGoTo(x - 1, y - 1)) return;
+                if (tryGoTo(x, y - 1)) return;
+                if (tryGoTo(x, y + 1)) return;
+                if (tryGoTo(x + 1, y + 1)) return;
+                if (tryGoTo(x + 1, y - 1)) return;
+                if (tryGoTo(x + 1, y)) return;
+                sleep();
+            }
             return;
         }
-        if (to.getX() > pos.getX() && to.getY() > pos.getY()) {
-            tryGoTo(pos.getX() + 1, pos.getY() + 1);
+        if (to.getX() > x && to.getY() > y) {
+            if (tryGoTo(x + 1, y + 1)) return;
+            if (tryGoTo(x, y + 1)) return;
+            if (tryGoTo(x + 1, y)) return;
+            if (tryGoTo(x - 1, y + 1)) return;
+            if (tryGoTo(x + 1, y - 1)) return;
+            if (tryGoTo(x - 1, y)) return;
+            if (tryGoTo(x, y - 1)) return;
+            if (tryGoTo(x - 1, y - 1)) return;
+            sleep();
             return;
         }
-        if (to.getX() < pos.getX() && to.getY() > pos.getY()) {
-            tryGoTo(pos.getX() - 1, pos.getY() + 1);
+        if (to.getX() < x && to.getY() > y) {
+            if (tryGoTo(x - 1, y + 1)) return;
+            if (tryGoTo(x - 1, y)) return;
+            if (tryGoTo(x, y + 1)) return;
+            if (tryGoTo(x + 1, y + 1)) return;
+            if (tryGoTo(x - 1, y - 1)) return;
+            if (tryGoTo(x, y + 1)) return;
+            if (tryGoTo(x - 1, y)) return;
+            if (tryGoTo(x + 1, y - 1)) return;
+            sleep();
             return;
         }
-        if (to.getX() < pos.getX() && to.getY() < pos.getY()) {
-            tryGoTo(pos.getX() - 1, pos.getY() - 1);
+        if (to.getX() < x && to.getY() < y) {
+            if (tryGoTo(x - 1, y - 1)) return;
+            if (tryGoTo(x, y - 1)) return;
+            if (tryGoTo(x - 1, y)) return;
+            if (tryGoTo(x - 1, y + 1)) return;
+            if (tryGoTo(x + 1, y - 1)) return;
+            if (tryGoTo(x, y + 1)) return;
+            if (tryGoTo(x + 1, y)) return;
+            if (tryGoTo(x + 1, y + 1)) return;
+            sleep();
             return;
         }
-        if (to.getX() > pos.getX() && to.getY() < pos.getY()) {
-            tryGoTo(pos.getX() + 1, pos.getY() - 1);
+        if (to.getX() > x && to.getY() < y) {
+            if (tryGoTo(x + 1, y - 1)) return;
+            if (tryGoTo(x + 1, y)) return;
+            if (tryGoTo(x, y - 1)) return;
+            if (tryGoTo(x - 1, y - 1)) return;
+            if (tryGoTo(x + 1, y + 1)) return;
+            if (tryGoTo(x, y - 1)) return;
+            if (tryGoTo(x + 1, y)) return;
+            if (tryGoTo(x - 1, y + 1)) return;
+            sleep();
             return;
-        } //TODO smart moving
+        }
+        sleep();
     }
 
-    protected void tryGoTo(int x, int y) {
-        if (canPass(x, y) && Map.world.checkEmptyPosition(x, y)) pos = new Point(x, y); else moveQuietly();
+    protected boolean tryGoTo(int x, int y) {
+        if (xMath.inMap(x, y) && canPass(x, y) && Map.world.checkEmptyPosition(x, y)) {
+            pos = new Point(x, y);
+            return true;
+        } else return false;
     }
 
     abstract protected void initRation();

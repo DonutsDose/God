@@ -62,7 +62,7 @@ public class Engine{
         addNewFish();
         addNewRabbit();
         //-------
-        MainPanel.mapInfoPanel.update(date, "<html>Fish : " + fishCount  + "<br> Rabbit : " + rabbitCount + "<br> Bear : " + bearCount + "</html>");
+        MainPanel.mapInfoPanel.update(date, "<html>Fish: " + fishCount  + "<br> Rabbit: " + rabbitCount + "<br> Bear: " + bearCount + "</html>");
         MapRender.update();
         MainPanel.map.repaint();
     }
@@ -83,6 +83,10 @@ public class Engine{
                 }
                 Map.world.creatures.remove(i);
             }
+        if (bearCount == 0) {
+            MainPanel.eventPanel.update("Last bear death(");
+            bearCount = -1;
+        }
     }
 
     private static void resetAll() {
@@ -128,5 +132,14 @@ public class Engine{
     public static void changeDelay(int x) {
         x = (100 - x + 1) * 10;
         if (timer != null) timer.setDelay(x); else timerDelay = x;
+    }
+
+    public static void reset() {
+        date = 0;
+        replantTree = 0;
+        borned.clear();
+        fishCount = 0;
+        rabbitCount = 0;
+        bearCount = WorldCreator.BEARS_COUNT;
     }
 }

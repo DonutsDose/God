@@ -1,5 +1,6 @@
 package code.Logic.Objects;
 
+import code.GUI.Formatter.Formatter;
 import code.GUI.Main.MainPanel;
 import code.Logic.Abstract.Creature;
 import code.Logic.Engine.Engine;
@@ -98,6 +99,27 @@ public class Plant extends Creature {
             face = 'T';
             color = 0;
         }
+    }
+
+    @Override
+    public String getInformation() {
+        return String.format("<html>Type: Tree %s<br>Age: %s<br>Product: %s<br>Product over after %s days<br>Next products: %s</html>", getStringType(), Formatter.formatDate(age), product, productOver, readyToReproduct);
+    }
+
+    private String getStringType() {
+        switch (type) {
+            case CREATURE_PLANT_KIWI : return "Kiwi";
+            case CREATURE_PLANT_APPLE : return "Apple";
+            case CREATURE_PLANT_BANANA : return "Banana";
+            case CREATURE_PLANT_STRAWBERRY : return "Strawberry";
+            case CREATURE_PLANT_PEAR : return "Pear";
+            case CREATURE_PLANT_LEMON : return "Lemon";
+            case CREATURE_PLANT_ORANGE : return "Orange";
+            case CREATURE_PLANT_BLUEBERRY : return "Blueberry";
+            case CREATURE_PLANT_COCONUT : return "Coconut";
+            case CREATURE_PLANT_BELLADONNA : return "Belladonna";
+        }
+        return "-";
     }
 
     @Override

@@ -36,4 +36,5 @@ abstract public class Creature {
 
     abstract public boolean canBeEaten();
     abstract public void eaten();
+    abstract public String getInformation();
 }

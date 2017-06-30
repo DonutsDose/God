@@ -23,7 +23,7 @@ public class EventPanel extends JScrollPane {
 
     private void setupView() {
         setBorder(new TitledBorder("Events Info"));
-        setPreferredSize(new Dimension(0, 150));
+        setPreferredSize(new Dimension(0, 250));
     }
 
     private void setupEvents() {

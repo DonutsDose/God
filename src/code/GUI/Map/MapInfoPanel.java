@@ -21,7 +21,7 @@ public class MapInfoPanel extends JPanel {
     }
 
     public final void update(int days, String msg) {
-        info.setText(String.format("<html>Date : %s<br>%s</html>", Formatter.formatDate(days), msg));
+        info.setText(String.format("<html>Date: %s<br>%s</html>", Formatter.formatDate(days), msg));
     }
 
     public void reset() {

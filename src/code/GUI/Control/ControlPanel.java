@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 
 public class ControlPanel extends JPanel implements ChangeListener {
 
-    JButton start, pause, stop, reset;
+    JButton start, pause, reset, flag;
 
     public ControlPanel() {
         setupView();
@@ -27,6 +27,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
 
     private void setupSlider() {
         JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 80);
+        slider.setPreferredSize(new Dimension(173, 50));
         Engine.changeDelay(80);
         slider.addChangeListener(this);
         slider.setMajorTickSpacing(10);
@@ -41,12 +42,11 @@ public class ControlPanel extends JPanel implements ChangeListener {
         // START
         start = new JButton();
         start.setIcon(new ImageIcon("src\\resourse\\Image\\control-start.png"));
-        start.setPreferredSize(new Dimension(25, 25));
+        start.setPreferredSize(new Dimension(22, 25));
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pause.setEnabled(true);
-                stop.setEnabled(false);
                 start.setEnabled(false);
                 reset.setEnabled(false);
                 Engine.start();
@@ -58,45 +58,46 @@ public class ControlPanel extends JPanel implements ChangeListener {
         // PAUSE
         pause = new JButton();
         pause.setIcon(new ImageIcon("src\\resourse\\Image\\control-pause.png"));
-        pause.setPreferredSize(new Dimension(25, 25));
+        pause.setPreferredSize(new Dimension(22, 25));
         pause.setEnabled(false);
         pause.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Engine.timer.stop();
                 start.setEnabled(true);
-                stop.setEnabled(false);
-                reset.setEnabled(false);
+                reset.setEnabled(true);
                 pause.setEnabled(false);
             }
         });
         pause.setVisible(true);
         add(pause);
 
-        // STOP
-        stop = new JButton();
-        stop.setIcon(new ImageIcon("src\\resourse\\Image\\control-stop.png"));
-        stop.setPreferredSize(new Dimension(25, 25));
-        stop.addActionListener(new ActionListener() {
+        // FLAG
+        flag = new JButton();
+        flag.setIcon(new ImageIcon("src\\resourse\\Image\\control-stop.png"));
+        flag.setPreferredSize(new Dimension(22, 25));
+        flag.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO
             }
         });
-        stop.setVisible(true);
-        stop.setEnabled(false);
-        add(stop);
-
+        flag.setVisible(true);
+        add(flag);
+        
         // RESET
         reset = new JButton();
         reset.setIcon(new ImageIcon("src\\resourse\\Image\\control-reset.png"));
-        reset.setPreferredSize(new Dimension(25, 25));
+        reset.setPreferredSize(new Dimension(22, 25));
         reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pause.setEnabled(false);
-                stop.setEnabled(false);
                 start.setEnabled(true);
+                Engine.reset();
+                MainPanel.mapInfoPanel.reset();
+                MainPanel.cellInfoPanel.reset();
+                MainPanel.eventPanel.reset();
                 MainPanel.map.setupMap();
                 MainPanel.map.repaint();
             }

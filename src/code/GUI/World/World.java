@@ -21,9 +21,9 @@ public class World {
 
     public LinkedList<Creature> creatures = new LinkedList();
 
-    private LinkedList<Point> grass = new LinkedList();
-    private LinkedList<Point> waterHigh = new LinkedList();
-    private LinkedList<Point> groundHigh = new LinkedList();
+    public LinkedList<Point> grass = new LinkedList();
+    public LinkedList<Point> waterHigh = new LinkedList();
+    public LinkedList<Point> groundHigh = new LinkedList();
 
     public void initGroundHigh() {
         for (int i=0; i<Map.MAP_HIGHT; i++)

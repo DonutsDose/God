@@ -18,6 +18,7 @@ public class MainPanel extends JPanel {
     public static Map map;
     public static MapInfoPanel mapInfoPanel;
     public static EventPanel eventPanel;
+    public static CellInfoPanel cellInfoPanel;
 
     public MainPanel() {
         setupView();
@@ -44,8 +45,9 @@ public class MainPanel extends JPanel {
     private void setupLeftPanel() {
         mapInfoPanel = new MapInfoPanel();
         eventPanel = new EventPanel();
+        cellInfoPanel = new CellInfoPanel();
         leftPanel.add(mapInfoPanel);
-        leftPanel.add(new CellInfoPanel());
+        leftPanel.add(cellInfoPanel);
         leftPanel.add(new ControlPanel());
         leftPanel.add(eventPanel);
     }

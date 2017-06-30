@@ -31,7 +31,7 @@ public class Map extends JTable {
     public static final int LANDSCAPE_GRASS           = 6;
     public static final int LANDSCAPE_FRESH_WATER     = 7;
 
-    public static final int MAX_CREATURE_TYPE          = 14;
+    public static final int MAX_CREATURE_TYPE          = 15;
     public static final int MAX_LANDSCAPE_TYPE         = 9;
 
     public static final int TREE                       = 1;
@@ -46,6 +46,7 @@ public class Map extends JTable {
     public static int[] passabilityFish = new int[MAX_LANDSCAPE_TYPE + 1];
     public static int[] passabilityRabbit = new int[MAX_LANDSCAPE_TYPE + 1];
     public static int[] passabilityBear = new int[MAX_LANDSCAPE_TYPE + 1];
+    public static int[] passabilityWolf = new int[MAX_LANDSCAPE_TYPE + 1];
 
     public static World world;
 
@@ -96,6 +97,7 @@ public class Map extends JTable {
             passabilityBear[i] = -1;
             passabilityFish[i] = -1;
             passabilityRabbit[i] = -1;
+            passabilityWolf[i] = -1;
         }
         //FISH
         passabilityFish[Map.LANDSCAPE_WATER_LOW] = 50;
@@ -108,8 +110,13 @@ public class Map extends JTable {
         passabilityBear[Map.LANDSCAPE_GROUND_LOW] = 510;
         passabilityBear[Map.LANDSCAPE_GROUND_HIGH] = 640;
         passabilityBear[Map.LANDSCAPE_GRASS] = 840;
-        passabilityBear[Map.LANDSCAPE_FRESH_WATER] = 1010;
-        passabilityBear[Map.LANDSCAPE_WATER_HIGH] = 1035;
+        passabilityBear[Map.LANDSCAPE_FRESH_WATER] = 1810;
+        passabilityBear[Map.LANDSCAPE_WATER_HIGH] = 2035;
+        //Wolf
+        passabilityWolf[Map.LANDSCAPE_GROUND_LOW] = 120;
+        passabilityWolf[Map.LANDSCAPE_GROUND_HIGH] = 230;
+        passabilityWolf[Map.LANDSCAPE_GRASS] = 340;
+        passabilityWolf[Map.LANDSCAPE_WATER_HIGH] = 735;
     }
 
     private void setupView() {

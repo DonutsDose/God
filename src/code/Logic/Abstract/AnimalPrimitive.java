@@ -16,7 +16,7 @@ abstract public class AnimalPrimitive extends Creature {
     public static final int CREATURE_ANIMAL_FISH = 11;
     public static final int CREATURE_ANIMAL_RABBIT = 12;
 
-    protected int energy, MAX_ENERGY;
+    protected int MAX_ENERGY;
 
     public AnimalPrimitive(Point pos, char face, int color, int type, int PERIOD_OF_PREGNANT, int MAX_ENERGY, int PROBABLY_DIE, boolean sex, int calories) {
         super(pos, face, color, type, PERIOD_OF_PREGNANT, PROBABLY_DIE, sex, calories);
@@ -35,38 +35,5 @@ abstract public class AnimalPrimitive extends Creature {
         if (!move(to)) sleep();
     }
 
-    protected boolean move(Point to) {
-        if (!xMath.inMap(to.getX(), to.getY()) || !canPass(to) || !Map.world.checkEmptyPosition(to.getX(), to.getY()) ||
-                getPass(to) > energy) return false;
-        moveTo(to);
-        energy -= getPass(to);
-        return true;
-    }
-
-    protected void moveTo(Point to) {
-        Map.world.ref[pos.getX()][pos.getY()] = null;
-        Map.world.ref[to.getX()][to.getY()] = this;
-        pos = to;
-    }
-
-    protected boolean move(int x, int y) {
-        return move(new Point(x, y));
-    }
-
     abstract protected void sleep();
-
-    abstract public int getPass(int x, int y);
-
-    public int getPass(Point pt) {
-        return getPass(pt.getX(), pt.getY());
-    }
-
-    public boolean canPass(int x, int y) {
-        return (getPass(x, y) != -1);
-    }
-
-    public boolean canPass(Point pt) {
-        return canPass(pt.getX(), pt.getY());
-    }
-
 }

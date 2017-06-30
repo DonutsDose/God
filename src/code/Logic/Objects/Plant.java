@@ -25,15 +25,15 @@ public class Plant extends Creature {
     public static final int CREATURE_PLANT_COCONUT    = 9;
     public static final int CREATURE_PLANT_BELLADONNA = 10;
     //calories
-    public static final int PLANT_CALORIES_KIWI       = 610;
-    public static final int PLANT_CALORIES_APPLE      = 520;
-    public static final int PLANT_CALORIES_BANANA     = 890;
-    public static final int PLANT_CALORIES_STRAWBERRY = 330;
-    public static final int PLANT_CALORIES_PEAR       = 570;
-    public static final int PLANT_CALORIES_LEMON      = 290;
-    public static final int PLANT_CALORIES_ORANGE     = 470;
-    public static final int PLANT_CALORIES_BLUEBERRY  = 440;
-    public static final int PLANT_CALORIES_COCONUT    = 3540;
+    public static final int PLANT_CALORIES_KIWI       = 1220;
+    public static final int PLANT_CALORIES_APPLE      = 1040;
+    public static final int PLANT_CALORIES_BANANA     = 1780;
+    public static final int PLANT_CALORIES_STRAWBERRY = 660;
+    public static final int PLANT_CALORIES_PEAR       = 1140;
+    public static final int PLANT_CALORIES_LEMON      = 580;
+    public static final int PLANT_CALORIES_ORANGE     = 940;
+    public static final int PLANT_CALORIES_BLUEBERRY  = 880;
+    public static final int PLANT_CALORIES_COCONUT    = 4540;
     public static final int PLANT_CALORIES_BELLADONNA = 0;
     //color
     public static final int PLANT_COLOR_KIWI          = 0x999900;
@@ -48,15 +48,15 @@ public class Plant extends Creature {
     public static final int PLANT_COLOR_BELLADONNA    = 0x330000;
     //period of pregnancy
     public static final int PERIOD_OF_PREGNANCY_KIWI  = 34;
-    public static final int PERIOD_OF_PREGNANCY_APPLE = 133;
-    public static final int PERIOD_OF_PREGNANCY_BANANA = 150;
-    public static final int PERIOD_OF_PREGNANCY_STRAWBERRY = 68;
-    public static final int PERIOD_OF_PREGNANCY_PEAR = 130;
-    public static final int PERIOD_OF_PREGNANCY_LEMON = 100;
-    public static final int PERIOD_OF_PREGNANCY_ORANGE = 250;
-    public static final int PERIOD_OF_PREGNANCY_BLUEBERRY = 345;
+    public static final int PERIOD_OF_PREGNANCY_APPLE = 60;
+    public static final int PERIOD_OF_PREGNANCY_BANANA = 75;
+    public static final int PERIOD_OF_PREGNANCY_STRAWBERRY = 32;
+    public static final int PERIOD_OF_PREGNANCY_PEAR = 75;
+    public static final int PERIOD_OF_PREGNANCY_LEMON = 50;
+    public static final int PERIOD_OF_PREGNANCY_ORANGE = 125;
+    public static final int PERIOD_OF_PREGNANCY_BLUEBERRY = 87;
     public static final int PERIOD_OF_PREGNANCY_COCONUT = 150;
-    public static final int PERIOD_OF_PREGNANCY_BELLADONNA = 60;
+    public static final int PERIOD_OF_PREGNANCY_BELLADONNA = 30;
 
     public static final int PROBABLY_DIE = 600;
     public static final int PROBABLY_TO_REPRODUCT = 65;
@@ -134,4 +134,7 @@ public class Plant extends Creature {
     public boolean canBeEaten() {
         return (product);
     }
+
+    @Override
+    public int getPass(int x, int y) {return 0;}
 }

@@ -3,6 +3,7 @@ package code.GUI.World;
 import code.GUI.Map.Map;
 import code.Logic.Objects.Bear;
 import code.Logic.Objects.Plant;
+import code.Logic.Objects.Wolf;
 import code.MyMath.Point;
 import code.MyMath.xMath;
 import code.MyMath.xRandom;
@@ -26,6 +27,7 @@ public class WorldCreator {
     private static final int DELTA_GRASS_OVER_PROBABLY = 15;
     private static final int GROUND_WIDTH = 4;
     private static final int WATER_WIDTH = 4;
+    
     private static final int PROBABLY_OF_CREATING_TREE = 60;
     private static final int KIWI_COUNT = 8;
     private static final int APPLE_COUNT = 20;
@@ -37,8 +39,12 @@ public class WorldCreator {
     private static final int BLUEBERRY_COUNT = 8;
     private static final int COCONUT_COUNT = 6;
     private static final int BELLADONNA_COUNT = 6;
+    
     public static final int BEARS_COUNT = 6;
-    private static final int BEARS_AREA = 6;
+    private static final int BEARS_AREA = 10;
+
+    public static final int WOLFS_COUNT = 8;
+    private static final int WOLFS_AREA = 10;
 
     public static void createWorld() {
         world = Map.world;
@@ -55,6 +61,7 @@ public class WorldCreator {
         world.initRef();
         addPlants();
         addBears();
+        addWolfs();
     }
 
     private static void addBears() {
@@ -66,6 +73,19 @@ public class WorldCreator {
         for (int i=1; i<=BEARS_COUNT; i++) {
             int index = xRandom.getIntInRange(0, place.size() - 1);
             world.creatures.add(new Bear(place.get(index), (i <= BEARS_COUNT / 2)));
+            place.remove(index);
+        }
+    }
+
+    private static void addWolfs() {
+        Point pt = world.getEmptyGrass();
+        LinkedList<Point> place = new LinkedList();
+        for (int i=pt.getX() - WOLFS_AREA; i<=pt.getX() + WOLFS_AREA; i++)
+            for (int j=pt.getY() - WOLFS_AREA; j<=pt.getY() + WOLFS_AREA; j++)
+                if (xMath.inMap(i, j) && Map.passabilityWolf[world.landscape[i][j]] != -1 && world.checkEmptyPosition(i, j)) place.add(new Point(i, j));
+        for (int i=1; i<=WOLFS_COUNT; i++) {
+            int index = xRandom.getIntInRange(0, place.size() - 1);
+            world.creatures.add(new Wolf(place.get(index), (i <= WOLFS_COUNT / 2)));
             place.remove(index);
         }
     }

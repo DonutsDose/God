@@ -16,8 +16,10 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
 
     private static final int TIME_BETWEEN_REPRODUCTION = 30;
     public static final int CREATURE_ANIMAL_BEAR = 13;
+    public static final int CREATURE_ANIMAL_WOLF = 14;
+    public static final int FIRST_ATTACK_BONUS = 856;
 
-    protected int MAX_SATIETY, satiety, AREA_OF_VISIBLE, DELTA_SATIETY;
+    protected int MAX_SATIETY, AREA_OF_VISIBLE, DELTA_SATIETY;
     protected boolean[] ration = new boolean[Map.MAX_CREATURE_TYPE];
 
     public AnimalSapiens(Point pos, char face, int color, int type, int PERIOD_OF_PREGNANT, int MAX_ENERGY, int MAX_SATIETY, int PROBABLY_DIE, boolean sex, int AREA_OF_VISIBLE, int PRODUCT_AGE, int calories, int DELTA_SATIETY) {
@@ -55,7 +57,7 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
         int eatIndex = -1, partnerIndex = -1;
         Point partner = new Point(0, 0), eat = new Point(0, 0);
         for (int i=0; i<Map.world.creatures.size(); i++)
-            if (Map.world.exist[i]) {
+            if (Map.world.creatures.get(i).exist) {
                 //FIND_EAT
                 if (canEat(Map.world.creatures.get(i)) && xMath.maxDist(pos, Map.world.creatures.get(i).pos) <= AREA_OF_VISIBLE && canPass(Map.world.creatures.get(i).pos)) {
                     if (eatIndex == -1) {
@@ -123,15 +125,27 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
     protected boolean tryToEat(Point to, int index) {
         if (xMath.maxDist(pos, to) == 1) {
             if (Map.world.creatures.get(index).type == Plant.CREATURE_PLANT_BELLADONNA) return false;
-            satiety = Math.min(MAX_SATIETY, Map.world.creatures.get(index).calories + satiety);
-            if (Map.getType(Map.world.creatures.get(index)) == Map.TREE) {
-                Map.world.creatures.get(index).eaten();
-            } else {
-                Map.world.exist[index] = false;
-                moveTo(to);
-            }
+            if (Map.getType(Map.world.creatures.get(index)) == Map.ANIMAL_SAPIENSE) {
+                int firstPoints = getBattlePoints() + FIRST_ATTACK_BONUS;
+                int secondPoints = Map.world.creatures.get(index).getBattlePoints();
+                if (firstPoints > secondPoints) {
+                    eatHim(this, Map.world.creatures.get(index));
+                } else if (firstPoints < secondPoints) {
+                    eatHim(Map.world.creatures.get(index), this);
+                }
+            } else eatHim(this, Map.world.creatures.get(index));
         } else goTo(to);
         return true;
+    }
+
+    protected void eatHim(Creature hunter, Creature victim) {
+        hunter.satiety = Math.min(MAX_SATIETY, victim.calories + satiety);
+        if (Map.getType(victim) == Map.TREE) {
+            victim.eaten();
+        } else {
+            victim.exist = false;
+            hunter.moveTo(victim.pos);
+        }
     }
 
     protected void goToReproduct(Point to, int index) {

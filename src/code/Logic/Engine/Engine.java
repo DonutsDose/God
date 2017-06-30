@@ -9,10 +9,7 @@ import code.GUI.World.WorldCreator;
 import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Abstract.AnimalSapiens;
 import code.Logic.Abstract.Creature;
-import code.Logic.Objects.Bear;
-import code.Logic.Objects.Fish;
-import code.Logic.Objects.NewAnimal;
-import code.Logic.Objects.Rabbit;
+import code.Logic.Objects.*;
 import code.MyMath.Point;
 import code.MyMath.xRandom;
 
@@ -39,6 +36,7 @@ public class Engine{
     public static int fishCount = 0;
     public static int rabbitCount = 0;
     public static int bearCount = WorldCreator.BEARS_COUNT;
+    public static int wolfCount = WorldCreator.WOLFS_COUNT;
 
     public static void start() {
         if (timer == null) {
@@ -72,12 +70,16 @@ public class Engine{
     }
 
     public static void updateMapInfo() {
-        MainPanel.mapInfoPanel.update(date, "<html>Fish: " + fishCount  + "<br> Rabbit: " + rabbitCount + "<br> Bear: " + bearCount + "<br> Locked flag: " + existSelected + "</html>");
+        MainPanel.mapInfoPanel.update(date, "<html>Fish: " + fishCount
+                + "<br> Rabbit: " + rabbitCount
+                + "<br> Bear: " + bearCount
+                + "<br> Wolf: " + wolfCount
+                + "<br> Locked flag: " + existSelected + "</html>");
     }
 
     private static void death() {
-        for (int i=Map.world.MAX_OBJECT_COUNT-1; i>=0; i--)
-            if (!Map.world.exist[i]) {
+        for (int i=0; i<Map.world.creatures.size(); i++)
+            if (!Map.world.creatures.get(i).exist) {
                 switch (Map.world.creatures.get(i).type) {
                     case AnimalPrimitive.CREATURE_ANIMAL_FISH:
                         fishCount--;
@@ -87,6 +89,9 @@ public class Engine{
                         break;
                     case AnimalSapiens.CREATURE_ANIMAL_BEAR:
                         bearCount--;
+                        break;
+                    case AnimalSapiens.CREATURE_ANIMAL_WOLF:
+                        wolfCount--;
                         break;
                 }
                 Map.world.creatures.remove(i);
@@ -99,7 +104,6 @@ public class Engine{
 
     private static void resetAll() {
         borned.clear();
-        for (int i=0; i<World.MAX_OBJECT_COUNT; i++) Map.world.exist[i] = true;
     }
 
     private static void addBorned() {
@@ -107,12 +111,15 @@ public class Engine{
             if (borned.get(i).type == AnimalSapiens.CREATURE_ANIMAL_BEAR) {
                 Map.world.creatures.add(new Bear(borned.get(i).pos, xRandom.getBoolean(50)));
                 bearCount++;
+            } else if (borned.get(i).type == AnimalSapiens.CREATURE_ANIMAL_WOLF) {
+                Map.world.creatures.add(new Wolf(borned.get(i).pos, xRandom.getBoolean(50)));
+                wolfCount++;
             }
     }
 
     private static void creaturesAct() {
         for (int i=0; i<Map.world.creatures.size(); i++)
-            if (Map.world.exist[i]) Map.world.exist[i] = Map.world.creatures.get(i).act();
+            if (Map.world.creatures.get(i).exist) Map.world.creatures.get(i).exist = Map.world.creatures.get(i).act();
     }
 
     private static void addNewFish() {

@@ -14,10 +14,7 @@ import java.util.LinkedList;
 
 public class World {
 
-    public static final int MAX_OBJECT_COUNT = 300;
-
     public int[][] landscape;
-    public boolean[] exist;
     public Creature[][] ref;
 
     public LinkedList<Creature> creatures;
@@ -28,7 +25,6 @@ public class World {
 
     public World() {
         landscape = new int[Map.MAP_HIGHT][Map.MAP_WIDTH];
-        exist = new boolean[MAX_OBJECT_COUNT];
         creatures = new LinkedList();
         grass = new LinkedList();
         waterHigh = new LinkedList();
@@ -48,7 +44,6 @@ public class World {
                 landscape[i][j] = 0;
                 ref = null;
             }
-        for (int i=0; i<MAX_OBJECT_COUNT; i++) exist[i] = false;
         creatures.clear();
         grass.clear();
         waterHigh.clear();

@@ -5,6 +5,7 @@ import code.GUI.Main.MainPanel;
 import code.GUI.World.World;
 import code.GUI.World.WorldCreator;
 import code.Logic.Abstract.Creature;
+import code.Logic.Engine.Engine;
 import code.MyMath.Point;
 import sun.applet.Main;
 
@@ -46,7 +47,7 @@ public class Map extends JTable {
     public static int[] passabilityRabbit = new int[MAX_LANDSCAPE_TYPE + 1];
     public static int[] passabilityBear = new int[MAX_LANDSCAPE_TYPE + 1];
 
-    public static World world = null, worldCopy = null;
+    public static World world = null;
 
     public Map() {
         initPassability();
@@ -62,19 +63,24 @@ public class Map extends JTable {
             public void mouseClicked(MouseEvent e) {
                 int x = rowAtPoint(e.getPoint());
                 int y = columnAtPoint(e.getPoint());
-                int creature = -1;
-                for (int i=0; i<Map.world.creatures.size(); i++)
-                    if (Map.world.creatures.get(i).pos.getX() == x && Map.world.creatures.get(i).pos.getY() == y) {
-                        creature = i;
-                        break;
-                    }
-                String msg = String.format("<html>x: %s y: %s<br>Landscape: %s<br>%s</html>", x, y, getLandscape(world.landscape[x][y]), creature == -1 ? "No objects -----------" : Map.world.creatures.get(creature).getInformation());
-                MainPanel.cellInfoPanel.update(msg);
+                if (!Engine.existSelected) uploadInfoCell(x, y);
             }
         });
     }
 
-    private String getLandscape(int type) {
+    public static void uploadInfoCell(int x, int y) {
+        Creature obj = findCreature(x, y);
+        String msg = String.format("<html>x: %s y: %s<br>Landscape: %s<br>%s</html>", x, y, getLandscape(world.landscape[x][y]), obj == null ? "No objects -----------" : obj.getInformation());
+        MainPanel.cellInfoPanel.update(msg);
+    }
+
+    public static Creature findCreature(int x, int y) {
+        for (int i=0; i<Map.world.creatures.size(); i++)
+            if (Map.world.creatures.get(i).pos.getX() == x && Map.world.creatures.get(i).pos.getY() == y) return Map.world.creatures.get(i);
+        return null;
+    }
+
+    private static String getLandscape(int type) {
         switch (type) {
             case LANDSCAPE_FRESH_WATER : return "Frash water";
             case LANDSCAPE_WATER_HIGH : return "Water high";
@@ -126,23 +132,8 @@ public class Map extends JTable {
 
     public void setupMap() {
         world = WorldCreator.createWorld();
-        worldCopy = world;
-        copyWorld();
         MapRender.setBackground();
         MapRender.update();
-    }
-
-    public void reloadMap() {
-        world = worldCopy;
-    }
-
-    public void copyWorld() {
-        worldCopy.landscape = world.landscape.clone();
-        worldCopy.exist = world.exist.clone();
-        worldCopy.creatures = world.creatures;
-        worldCopy.grass = world.grass;
-        worldCopy.waterHigh = world.waterHigh;
-        worldCopy.groundHigh = world.groundHigh;
     }
 
     public static int getType(Creature obj) {

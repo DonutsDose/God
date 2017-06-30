@@ -20,7 +20,7 @@ public class MainWindow extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setIconImage(new ImageIcon("src\\resourse\\Image\\logo.jpg").getImage());
+        setIconImage(new ImageIcon("src\\resourse\\Image\\logo.png").getImage());
         setTitle("GOD");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -25,9 +25,9 @@ public class Fish extends AnimalPrimitive {
 
     @Override
     public boolean act() {
-        if (!super.act()) return false;
+        if (!super.act()) return death();
         if (energy < (MAX_ENERGY>>1) && xRandom.getBoolean(AnimalPrimitive.PROBABLY_OF_SLEEPING)) sleep(); else moveQuietly();
-        return true;
+        return ok();
     }
 
     @Override

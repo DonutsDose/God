@@ -31,9 +31,9 @@ public class Bear extends AnimalSapiens {
 
     @Override
     public boolean act() {
-        if (!super.act()) return false;
+        if (!super.act()) return death();
         if (pregnant) color = BEAR_COLOR_PREGNANT; else color = sex ? BEAR_COLOR_WOMEN : BEAR_COLOR_MEN;
-        return true;
+        return ok();
     }
 
     @Override

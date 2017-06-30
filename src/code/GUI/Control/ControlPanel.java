@@ -1,6 +1,8 @@
 package code.GUI.Control;
 
 import code.GUI.Main.MainPanel;
+import code.GUI.Map.Map;
+import code.Logic.Abstract.Creature;
 import code.Logic.Engine.Engine;
 
 import javax.swing.*;
@@ -9,6 +11,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static code.Logic.Engine.Engine.selected;
 
 /**
  * Created by DonutsDose-PC on 20.06.2017.
@@ -74,12 +78,27 @@ public class ControlPanel extends JPanel implements ChangeListener {
 
         // FLAG
         flag = new JButton();
-        flag.setIcon(new ImageIcon("src\\resourse\\Image\\control-stop.png"));
+        flag.setIcon(new ImageIcon("src\\resourse\\Image\\control-flag.png"));
         flag.setPreferredSize(new Dimension(22, 25));
         flag.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO
+                if (Engine.existSelected) {
+                    Engine.existSelected = false;
+                    Engine.selected.isSelected = false;
+                    Engine.updateMapInfo();
+                    return;
+                }
+                int x = MainPanel.map.getSelectedRow(), y = MainPanel.map.getSelectedColumn();
+                if (x != -1 && y != -1) {
+                    Creature obj = Map.findCreature(x, y);
+                    if (obj != null) {
+                        Engine.existSelected = true;
+                        Engine.selected = obj;
+                        obj.isSelected = true;
+                    }
+                }
+                Engine.updateMapInfo();
             }
         });
         flag.setVisible(true);

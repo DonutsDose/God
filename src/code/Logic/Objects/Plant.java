@@ -76,11 +76,10 @@ public class Plant extends Creature {
     public boolean act() {
         if (!super.act()) {
             Engine.replantTree++;
-            MainPanel.map.world.addEmptyGrass(pos);
-            return false;
+            return death();
         }
         reproductFunction();
-        return true;
+        return ok();
     }
 
     protected void reproductFunction() {

@@ -7,6 +7,7 @@ import code.GUI.World.World;
 import code.GUI.World.WorldCreator;
 import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Abstract.AnimalSapiens;
+import code.Logic.Abstract.Creature;
 import code.Logic.Objects.Bear;
 import code.Logic.Objects.Fish;
 import code.Logic.Objects.NewAnimal;
@@ -29,6 +30,8 @@ public class Engine{
     public static Timer timer = null;
     private static int timerDelay = 510;
     public static int replantTree = 0;
+    public static Creature selected = null;
+    public static boolean existSelected = false;
     public static LinkedList<NewAnimal> borned = new LinkedList();
 
     //STATISTIC
@@ -62,9 +65,13 @@ public class Engine{
         addNewFish();
         addNewRabbit();
         //-------
-        MainPanel.mapInfoPanel.update(date, "<html>Fish: " + fishCount  + "<br> Rabbit: " + rabbitCount + "<br> Bear: " + bearCount + "</html>");
+        updateMapInfo();
         MapRender.update();
         MainPanel.map.repaint();
+    }
+
+    public static void updateMapInfo() {
+        MainPanel.mapInfoPanel.update(date, "<html>Fish: " + fishCount  + "<br> Rabbit: " + rabbitCount + "<br> Bear: " + bearCount + "<br> isSelected: " + existSelected + "</html>");
     }
 
     private static void death() {

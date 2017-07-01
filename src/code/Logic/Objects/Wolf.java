@@ -15,14 +15,14 @@ import code.MyMath.xMath;
 public class Wolf extends AnimalSapiens {
 
     private static final char FACE = 'F';
-    private static final int COLOR_MEN = 0x920066;
-    private static final int COLOR_WOMEN = 0x45160C;
+    private static final int COLOR_MEN = 0x8254BB;
+    private static final int COLOR_WOMEN = 0x8FA0BD;
     private static final int COLOR_PREGNANT = 0xFF3333;
     private static final int PERIOD_OF_PREGNANT = 270;
     private static final int MAX_ENERGY = 4_500;
-    private static final int MAX_SATIETY = 3000;
+    private static final int MAX_SATIETY = 6000;
     private static final int PROBABLY_TO_DIE = 600;
-    private static final int AREA_OF_VISIBLE = 5;
+    private static final int AREA_OF_VISIBLE = 7;
     private static final int PRODUCT_AGE = 134;
     private static final int DELTA_SATIETY = 13;
     private static final int CALORIES = 4780;
@@ -78,5 +78,6 @@ public class Wolf extends AnimalSapiens {
         ration[AnimalPrimitive.CREATURE_ANIMAL_RABBIT] = true;
         ration[AnimalPrimitive.CREATURE_ANIMAL_FISH] = true;
         ration[AnimalSapiens.CREATURE_ANIMAL_BEAR] = true;
+        ration[AnimalSapiens.CREATURE_ANIMAL_TIGER] = true;
     }
 }

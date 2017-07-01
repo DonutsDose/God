@@ -1,9 +1,7 @@
 package code.GUI.World;
 
 import code.GUI.Map.Map;
-import code.Logic.Objects.Bear;
-import code.Logic.Objects.Plant;
-import code.Logic.Objects.Wolf;
+import code.Logic.Objects.*;
 import code.MyMath.Point;
 import code.MyMath.xMath;
 import code.MyMath.xRandom;
@@ -46,6 +44,12 @@ public class WorldCreator {
     public static final int WOLFS_COUNT = 8;
     private static final int WOLFS_AREA = 10;
 
+    public static final int TIGERS_COUNT = 4;
+    private static final int TIGERS_AREA = 3;
+
+    public static final int HUMANS_COUNT = 10;
+    private static final int HUMANS_AREA = 5;
+
     public static void createWorld() {
         world = Map.world;
         addWater();
@@ -62,6 +66,34 @@ public class WorldCreator {
         addPlants();
         addBears();
         addWolfs();
+        addTigers();
+        addHumans();
+    }
+
+    private static void addHumans() {
+        Point pt = world.getEmptyGrass();
+        LinkedList<Point> place = new LinkedList();
+        for (int i=pt.getX() - HUMANS_AREA; i<=pt.getX() + HUMANS_AREA; i++)
+            for (int j=pt.getY() - HUMANS_AREA; j<=pt.getY() + HUMANS_AREA; j++)
+                if (xMath.inMap(i, j) && Map.passabilityHuman[world.landscape[i][j]] != -1 && world.checkEmptyPosition(i, j)) place.add(new Point(i, j));
+        for (int i=1; i<=HUMANS_COUNT; i++) {
+            int index = xRandom.getIntInRange(0, place.size() - 1);
+            world.creatures.add(new Human(place.get(index), (i <= HUMANS_COUNT / 2)));
+            place.remove(index);
+        }
+    }
+
+    private static void addTigers() {
+        Point pt = world.getEmptyGrass();
+        LinkedList<Point> place = new LinkedList();
+        for (int i=pt.getX() - TIGERS_AREA; i<=pt.getX() + TIGERS_AREA; i++)
+            for (int j=pt.getY() - TIGERS_AREA; j<=pt.getY() + TIGERS_AREA; j++)
+                if (xMath.inMap(i, j) && Map.passabilityTiger[world.landscape[i][j]] != -1 && world.checkEmptyPosition(i, j)) place.add(new Point(i, j));
+        for (int i=1; i<=TIGERS_COUNT; i++) {
+            int index = xRandom.getIntInRange(0, place.size() - 1);
+            world.creatures.add(new Tiger(place.get(index), (i <= TIGERS_COUNT / 2)));
+            place.remove(index);
+        }
     }
 
     private static void addBears() {

@@ -17,6 +17,8 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
     private static final int TIME_BETWEEN_REPRODUCTION = 30;
     public static final int CREATURE_ANIMAL_BEAR = 13;
     public static final int CREATURE_ANIMAL_WOLF = 14;
+    public static final int CREATURE_ANIMAL_TIGER = 15;
+    public static final int CREATURE_ANIMAL_HUMAN = 16;
     public static final int FIRST_ATTACK_BONUS = 856;
 
     protected int MAX_SATIETY, AREA_OF_VISIBLE, DELTA_SATIETY;

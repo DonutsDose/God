@@ -31,22 +31,24 @@ public class Map extends JTable {
     public static final int LANDSCAPE_GRASS           = 6;
     public static final int LANDSCAPE_FRESH_WATER     = 7;
 
-    public static final int MAX_CREATURE_TYPE          = 15;
+    public static final int MAX_CREATURE_TYPE          = 20;
     public static final int MAX_LANDSCAPE_TYPE         = 9;
 
     public static final int TREE                       = 1;
     public static final int ANIMAL_PRIMITIVE           = 2;
     public static final int ANIMAL_SAPIENSE            = 3;
 
-    public static final int FISH_CREATING_PROBABLY = 15;
+    public static final int FISH_CREATING_PROBABLY = 10;
     public static final int FISH_CREATING_COUNT = 5;
-    public static final int RABBIT_CREATING_PROBABLY = 20;
+    public static final int RABBIT_CREATING_PROBABLY = 5;
     public static final int RABBIT_CREATING_COUNT = 2;
     
     public static int[] passabilityFish = new int[MAX_LANDSCAPE_TYPE + 1];
     public static int[] passabilityRabbit = new int[MAX_LANDSCAPE_TYPE + 1];
     public static int[] passabilityBear = new int[MAX_LANDSCAPE_TYPE + 1];
     public static int[] passabilityWolf = new int[MAX_LANDSCAPE_TYPE + 1];
+    public static int[] passabilityTiger = new int[MAX_LANDSCAPE_TYPE + 1];
+    public static int[] passabilityHuman = new int[MAX_LANDSCAPE_TYPE + 1];
 
     public static World world;
 
@@ -98,6 +100,8 @@ public class Map extends JTable {
             passabilityFish[i] = -1;
             passabilityRabbit[i] = -1;
             passabilityWolf[i] = -1;
+            passabilityTiger[i] = -1;
+            passabilityHuman[i] = -1;
         }
         //FISH
         passabilityFish[Map.LANDSCAPE_WATER_LOW] = 50;
@@ -117,6 +121,18 @@ public class Map extends JTable {
         passabilityWolf[Map.LANDSCAPE_GROUND_HIGH] = 230;
         passabilityWolf[Map.LANDSCAPE_GRASS] = 340;
         passabilityWolf[Map.LANDSCAPE_WATER_HIGH] = 735;
+        //Tiger
+        passabilityTiger[Map.LANDSCAPE_GROUND_LOW] = 240;
+        passabilityTiger[Map.LANDSCAPE_GROUND_HIGH] = 250;
+        passabilityTiger[Map.LANDSCAPE_GRASS] = 300;
+        passabilityTiger[Map.LANDSCAPE_WATER_HIGH] = 1200;
+        //Human
+        passabilityHuman[Map.LANDSCAPE_GROUND_LOW] = 100;
+        passabilityHuman[Map.LANDSCAPE_GROUND_HIGH] = 180;
+        passabilityHuman[Map.LANDSCAPE_GRASS] = 230;
+        passabilityHuman[Map.LANDSCAPE_FRESH_WATER] = 130;
+        passabilityHuman[Map.LANDSCAPE_WATER_HIGH] = 150;
+        passabilityHuman[Map.LANDSCAPE_WATER_LOW] = 250;
     }
 
     private void setupView() {

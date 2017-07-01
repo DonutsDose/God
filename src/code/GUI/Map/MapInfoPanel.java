@@ -31,7 +31,7 @@ public class MapInfoPanel extends JPanel {
     private void setupView() {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setBorder(new TitledBorder("Map Info"));
-        setPreferredSize(new Dimension(300, 100));
+        setPreferredSize(new Dimension(300, 112));
     }
 
     private void setupInfo() {

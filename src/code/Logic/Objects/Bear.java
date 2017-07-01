@@ -22,9 +22,9 @@ public class Bear extends AnimalSapiens {
     private static final int COLOR_PREGNANT = 0xFF3333;
     private static final int PERIOD_OF_PREGNANT = 330;
     private static final int MAX_ENERGY = 10_000;
-    private static final int MAX_SATIETY = 5000;
+    private static final int MAX_SATIETY = 9_000;
     private static final int PROBABLY_TO_DIE = 1000;
-    private static final int AREA_OF_VISIBLE = 3;
+    private static final int AREA_OF_VISIBLE = 5;
     private static final int PRODUCT_AGE = 200;
     private static final int DELTA_SATIETY = 25;
     private static final int CALORIES = 25630;
@@ -67,6 +67,7 @@ public class Bear extends AnimalSapiens {
         ration[AnimalPrimitive.CREATURE_ANIMAL_FISH] = true;
         ration[AnimalPrimitive.CREATURE_ANIMAL_RABBIT] = true;
         ration[AnimalSapiens.CREATURE_ANIMAL_WOLF] = true;
+        ration[AnimalSapiens.CREATURE_ANIMAL_TIGER] = true;
     }
 
     @Override

@@ -23,7 +23,7 @@ abstract public class Creature {
     protected int age = 0, PERIOD_OF_PREGNANT = 0, PROBABLY_DIE;
     protected boolean sex, pregnant = false;
     public char face = ' ', NORMAL_FACE;
-    public boolean isSelected = false, exist;
+    public boolean isSelected = false, exist, turned = false;
 
     public Creature(Point pos, char NORMAL_FACE, int color, int type, int PERIOD_OF_PREGNANT, int PROBABLY_DIE, boolean sex, int calories) {
         this.pos = pos;

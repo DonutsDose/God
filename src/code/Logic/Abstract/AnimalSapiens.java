@@ -87,7 +87,7 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
                         }
                 }
         //-----------------
-        if (((satiety * 3) >> 1) < MAX_SATIETY) {
+        if (((satiety * 3) / 2) < MAX_SATIETY) {
             if (eatIndex != -1) {
                 if (!tryToEat(eat)) {
                     event("Deid by poisoning plants");

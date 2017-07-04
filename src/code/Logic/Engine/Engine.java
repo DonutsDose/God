@@ -59,6 +59,7 @@ public class Engine{
         date++;
         resetAll();
         borned.clear();
+        activeTurn();
         //DYNAMIC
         creaturesAct();
         //NEW
@@ -72,6 +73,12 @@ public class Engine{
         updateMapInfo();
         MapRender.update();
         MainPanel.map.repaint();
+    }
+
+    private static void activeTurn() {
+        for (int i=0; i<Map.MAP_HIGHT; i++)
+            for (int j=0; j<Map.MAP_WIDTH; j++)
+                if (World.ref[i][j] != null) World.ref[i][j].turned = false;
     }
 
     public static void updateMapInfo() {
@@ -158,7 +165,8 @@ public class Engine{
     private static void creaturesAct() {
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
-                if (World.ref[i][j] != null && World.ref[i][j].exist) {
+                if (World.ref[i][j] != null && World.ref[i][j].exist && !World.ref[i][j].turned) {
+                    World.ref[i][j].turned = true;
                     World.ref[i][j].exist = World.ref[i][j].act();
                 }
     }

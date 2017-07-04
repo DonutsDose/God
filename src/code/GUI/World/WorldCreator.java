@@ -45,7 +45,7 @@ public class WorldCreator {
     public static final int TIGERS_COUNT = 4;
     private static final int TIGERS_AREA = 3;
 
-    public static final int HUMANS_COUNT = 10;
+    public static final int HUMANS_COUNT = 1;
     private static final int HUMANS_AREA = 5;
 
     public static void createWorld() {

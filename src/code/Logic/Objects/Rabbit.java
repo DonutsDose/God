@@ -2,6 +2,7 @@ package code.Logic.Objects;
 
 import code.GUI.Formatter.Formatter;
 import code.GUI.Map.Map;
+import code.GUI.World.World;
 import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Engine.Engine;
 import code.MyMath.Point;
@@ -52,6 +53,6 @@ public class Rabbit extends AnimalPrimitive {
 
     @Override
     public int getPass(int x, int y) {
-        return Map.passabilityRabbit[Map.world.landscape[x][y]];
+        return Map.passabilityRabbit[World.landscape[x][y]];
     }
 }

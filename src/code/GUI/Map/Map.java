@@ -38,9 +38,10 @@ public class Map extends JTable {
     public static final int ANIMAL_PRIMITIVE           = 2;
     public static final int ANIMAL_SAPIENSE            = 3;
 
-    public static final int FISH_CREATING_PROBABLY = 10;
+    public static final int FISH_CREATING_PROBABLY = 13;
     public static final int FISH_CREATING_COUNT = 5;
-    public static final int RABBIT_CREATING_PROBABLY = 5;
+
+    public static final int RABBIT_CREATING_PROBABLY = 8;
     public static final int RABBIT_CREATING_COUNT = 2;
     
     public static int[] passabilityFish = new int[MAX_LANDSCAPE_TYPE + 1];
@@ -50,10 +51,7 @@ public class Map extends JTable {
     public static int[] passabilityTiger = new int[MAX_LANDSCAPE_TYPE + 1];
     public static int[] passabilityHuman = new int[MAX_LANDSCAPE_TYPE + 1];
 
-    public static World world;
-
     public Map() {
-        world = new World();
         initPassability();
         setupView();
         setupMap();
@@ -74,12 +72,12 @@ public class Map extends JTable {
 
     public static void uploadInfoCell(int x, int y) {
         Creature obj = findCreature(x, y);
-        String msg = String.format("<html>x: %s y: %s<br>Landscape: %s<br>%s</html>", x, y, getLandscape(world.landscape[x][y]), obj == null ? "No objects -----------" : obj.getInformation());
+        String msg = String.format("<html>x: %s y: %s<br>Landscape: %s<br>%s</html>", x, y, getLandscape(World.landscape[x][y]), obj == null ? "No objects -----------" : obj.getInformation());
         MainPanel.cellInfoPanel.update(msg);
     }
 
     public static Creature findCreature(int x, int y) {
-        return world.ref[x][y];
+        return World.ref[x][y];
     }
 
     private static String getLandscape(int type) {
@@ -153,7 +151,7 @@ public class Map extends JTable {
     }
 
     public void setupMap() {
-        world.reset();
+        World.reset();
         WorldCreator.createWorld();
         MapRender.setBackground();
         MapRender.update();

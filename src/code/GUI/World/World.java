@@ -14,58 +14,47 @@ import java.util.LinkedList;
 
 public class World {
 
-    public int[][] landscape;
-    public Creature[][] ref;
+    public static int[][] landscape = new int[Map.MAP_HIGHT][Map.MAP_WIDTH];
+    public static Creature[][] ref = new Creature[Map.MAP_HIGHT][Map.MAP_WIDTH];
 
-    public LinkedList<Creature> creatures;
+    public static LinkedList<Point> grass = new LinkedList();
+    public static LinkedList<Point> waterHigh = new LinkedList();
+    public static LinkedList<Point> groundHigh = new LinkedList();
 
-    public LinkedList<Point> grass;
-    public LinkedList<Point> waterHigh;
-    public LinkedList<Point> groundHigh;
-
-    public World() {
-        landscape = new int[Map.MAP_HIGHT][Map.MAP_WIDTH];
-        creatures = new LinkedList();
-        grass = new LinkedList();
-        waterHigh = new LinkedList();
-        groundHigh = new LinkedList();
-    }
-
-    public void initRef() {
+    public static void initRef() {
         ref = new Creature[Map.MAP_HIGHT][Map.MAP_WIDTH];
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
                 ref[i][j] = null;
     }
 
-    public void reset() {
+    public static void reset() {
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++) {
                 landscape[i][j] = 0;
                 ref = null;
             }
-        creatures.clear();
         grass.clear();
         waterHigh.clear();
         groundHigh.clear();
     }
 
-    public void initGroundHigh() {
+    public static void initGroundHigh() {
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
                 if (landscape[i][j] == Map.LANDSCAPE_GROUND_HIGH) groundHigh.add(new Point(i, j));
     }
 
-    public Point getGroundHigh() {
+    public static Point getGroundHigh() {
         int index = xRandom.getIntInRange(0, groundHigh.size() - 1);
         return groundHigh.get(index);
     }
 
-    public void replant(int cnt) {
+    public static void replant(int cnt) {
         for (int i=1; i<=cnt; i++) addNewTree();
     }
 
-    private void addNewTree() {
+    private static void addNewTree() {
         int type = xRandom.getIntInRange(1, 10);
         if (type == 1)
             addPlant(Plant.PLANT_COLOR_KIWI, Plant.CREATURE_PLANT_KIWI, Plant.PERIOD_OF_PREGNANCY_KIWI, Plant.PLANT_CALORIES_KIWI);
@@ -89,28 +78,28 @@ public class World {
             addPlant(Plant.PLANT_COLOR_BELLADONNA, Plant.CREATURE_PLANT_BELLADONNA, Plant.PERIOD_OF_PREGNANCY_BELLADONNA, Plant.PLANT_CALORIES_ORANGE);
     }
 
-    private void addPlant(int color, int type, int PERIOD_OF_PREGNANT, int calories) {
+    private static void addPlant(int color, int type, int PERIOD_OF_PREGNANT, int calories) {
         Point pt = getEmptyGrass();
-        Map.world.creatures.add(new Plant(pt, color, type, PERIOD_OF_PREGNANT, calories));
+        World.ref[pt.getX()][pt.getY()] = new Plant(pt, color, type, PERIOD_OF_PREGNANT, calories);
     }
 
-    public void initGrass() {
+    public static void initGrass() {
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
                 if (landscape[i][j] == Map.LANDSCAPE_GRASS) addEmptyGrass(new code.MyMath.Point(i, j));
     }
 
-    public void initWaterHigh() {
+    public static void initWaterHigh() {
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
                 if (landscape[i][j] == Map.LANDSCAPE_WATER_HIGH) waterHigh.add(new Point(i, j));
     }
 
-    public Point getWaterHigh() {
+    public static Point getWaterHigh() {
         return waterHigh.get(xRandom.getIntInRange(0, waterHigh.size() - 1));
     }
 
-    public Point getEmptyGrass() {
+    public static Point getEmptyGrass() {
         int index = xRandom.getIntInRange(0, grass.size() - 1);
         Point res = grass.get(index);
         while (!checkEmptyPosition(res)) {
@@ -120,15 +109,15 @@ public class World {
         return res;
     }
 
-    public void addEmptyGrass(code.MyMath.Point pt) {
+    public static void addEmptyGrass(code.MyMath.Point pt) {
         grass.add(pt);
     }
 
-    public boolean checkEmptyPosition(int x, int y) {
+    public static boolean checkEmptyPosition(int x, int y) {
         return (ref[x][y] == null);
     }
 
-    public boolean checkEmptyPosition(Point pt) {
+    public static boolean checkEmptyPosition(Point pt) {
         return checkEmptyPosition(pt.getX(), pt.getY());
     }
 }

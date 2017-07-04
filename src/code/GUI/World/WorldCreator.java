@@ -16,8 +16,6 @@ import java.util.Queue;
 
 public class WorldCreator {
 
-    private static World world;
-
     private static final int LEVEL_OF_SMOOTHING = 1;
     private static final int SQUARE_OF_GROUND = 4500;
     private static final int SQUARE_OF_GRASS = 2000;
@@ -36,7 +34,7 @@ public class WorldCreator {
     private static final int ORANGE_COUNT = 7;
     private static final int BLUEBERRY_COUNT = 8;
     private static final int COCONUT_COUNT = 6;
-    private static final int BELLADONNA_COUNT = 6;
+    private static final int BELLADONNA_COUNT = 4;
     
     public static final int BEARS_COUNT = 6;
     private static final int BEARS_AREA = 10;
@@ -51,7 +49,6 @@ public class WorldCreator {
     private static final int HUMANS_AREA = 5;
 
     public static void createWorld() {
-        world = Map.world;
         addWater();
         addGroundHigh();
         smoothing();
@@ -59,65 +56,65 @@ public class WorldCreator {
         addGrass();
         addWaterHigh();
         addFreshWater();
-        world.initGrass();
-        world.initWaterHigh();
-        world.initGroundHigh();
-        world.initRef();
+        World.initGrass();
+        World.initWaterHigh();
+        World.initGroundHigh();
+        World.initRef();
         addPlants();
-        addBears();
-        addWolfs();
-        addTigers();
+        //addBears();
+        //addWolfs();
+        //addTigers();
         addHumans();
     }
 
     private static void addHumans() {
-        Point pt = world.getEmptyGrass();
+        Point pt = World.getEmptyGrass();
         LinkedList<Point> place = new LinkedList();
         for (int i=pt.getX() - HUMANS_AREA; i<=pt.getX() + HUMANS_AREA; i++)
             for (int j=pt.getY() - HUMANS_AREA; j<=pt.getY() + HUMANS_AREA; j++)
-                if (xMath.inMap(i, j) && Map.passabilityHuman[world.landscape[i][j]] != -1 && world.checkEmptyPosition(i, j)) place.add(new Point(i, j));
+                if (xMath.inMap(i, j) && Map.passabilityHuman[World.landscape[i][j]] != -1 && World.checkEmptyPosition(i, j)) place.add(new Point(i, j));
         for (int i=1; i<=HUMANS_COUNT; i++) {
             int index = xRandom.getIntInRange(0, place.size() - 1);
-            world.creatures.add(new Human(place.get(index), (i <= HUMANS_COUNT / 2)));
+            World.ref[place.get(index).getX()][place.get(index).getY()] = new Human(place.get(index), (i <= HUMANS_COUNT / 2));
             place.remove(index);
         }
     }
 
     private static void addTigers() {
-        Point pt = world.getEmptyGrass();
+        Point pt = World.getEmptyGrass();
         LinkedList<Point> place = new LinkedList();
         for (int i=pt.getX() - TIGERS_AREA; i<=pt.getX() + TIGERS_AREA; i++)
             for (int j=pt.getY() - TIGERS_AREA; j<=pt.getY() + TIGERS_AREA; j++)
-                if (xMath.inMap(i, j) && Map.passabilityTiger[world.landscape[i][j]] != -1 && world.checkEmptyPosition(i, j)) place.add(new Point(i, j));
+                if (xMath.inMap(i, j) && Map.passabilityTiger[World.landscape[i][j]] != -1 && World.checkEmptyPosition(i, j)) place.add(new Point(i, j));
         for (int i=1; i<=TIGERS_COUNT; i++) {
             int index = xRandom.getIntInRange(0, place.size() - 1);
-            world.creatures.add(new Tiger(place.get(index), (i <= TIGERS_COUNT / 2)));
+            World.ref[place.get(index).getX()][place.get(index).getY()] = new Tiger(place.get(index), (i <= TIGERS_COUNT / 2));
             place.remove(index);
         }
     }
 
     private static void addBears() {
-        Point pt = world.getEmptyGrass();
+        Point pt = World.getEmptyGrass();
         LinkedList<Point> place = new LinkedList();
         for (int i=pt.getX() - BEARS_AREA; i<=pt.getX() + BEARS_AREA; i++)
             for (int j=pt.getY() - BEARS_AREA; j<=pt.getY() + BEARS_AREA; j++)
-                if (xMath.inMap(i, j) && Map.passabilityBear[world.landscape[i][j]] != -1 && world.checkEmptyPosition(i, j)) place.add(new Point(i, j));
+                if (xMath.inMap(i, j) && Map.passabilityBear[World.landscape[i][j]] != -1 && World.checkEmptyPosition(i, j)) place.add(new Point(i, j));
         for (int i=1; i<=BEARS_COUNT; i++) {
             int index = xRandom.getIntInRange(0, place.size() - 1);
-            world.creatures.add(new Bear(place.get(index), (i <= BEARS_COUNT / 2)));
+            World.ref[place.get(index).getX()][place.get(index).getY()] = new Bear(place.get(index), (i <= BEARS_COUNT / 2));
             place.remove(index);
         }
     }
 
     private static void addWolfs() {
-        Point pt = world.getEmptyGrass();
+        Point pt = World.getEmptyGrass();
         LinkedList<Point> place = new LinkedList();
         for (int i=pt.getX() - WOLFS_AREA; i<=pt.getX() + WOLFS_AREA; i++)
             for (int j=pt.getY() - WOLFS_AREA; j<=pt.getY() + WOLFS_AREA; j++)
-                if (xMath.inMap(i, j) && Map.passabilityWolf[world.landscape[i][j]] != -1 && world.checkEmptyPosition(i, j)) place.add(new Point(i, j));
+                if (xMath.inMap(i, j) && Map.passabilityWolf[World.landscape[i][j]] != -1 && World.checkEmptyPosition(i, j)) place.add(new Point(i, j));
         for (int i=1; i<=WOLFS_COUNT; i++) {
             int index = xRandom.getIntInRange(0, place.size() - 1);
-            world.creatures.add(new Wolf(place.get(index), (i <= WOLFS_COUNT / 2)));
+            World.ref[place.get(index).getX()][place.get(index).getY()] = new Wolf(place.get(index), (i <= WOLFS_COUNT / 2));
             place.remove(index);
         }
     }
@@ -138,8 +135,8 @@ public class WorldCreator {
     private static void addPlant(int count, int color, int type, int PERIOD_OF_PREGNANT, int calories) {
         for (int i=1; i<=count; i++)
             if (xRandom.getBoolean(PROBABLY_OF_CREATING_TREE)) {
-                Point pt = world.getEmptyGrass();
-                world.creatures.add(new Plant(pt, color, type, PERIOD_OF_PREGNANT, calories));
+                Point pt = World.getEmptyGrass();
+                World.ref[pt.getX()][pt.getY()] = new Plant(pt, color, type, PERIOD_OF_PREGNANT, calories);
             }
     }
 
@@ -160,7 +157,7 @@ public class WorldCreator {
         while (!q.isEmpty()) {
             int x = q.peek().getX();
             int y = q.peek().getY();
-            if (!used[x][y] && (world.landscape[x][y] == Map.LANDSCAPE_WATER_HIGH || world.landscape[x][y] == Map.LANDSCAPE_WATER_LOW)) {
+            if (!used[x][y] && (World.landscape[x][y] == Map.LANDSCAPE_WATER_HIGH || World.landscape[x][y] == Map.LANDSCAPE_WATER_LOW)) {
                 used[x][y] = true;
                 if (xMath.inMap(x - 1, y)) q.add(new Point(x - 1, y));
                 if (xMath.inMap(x + 1, y)) q.add(new Point(x + 1, y));
@@ -175,30 +172,30 @@ public class WorldCreator {
         }
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
-                if (!used[i][j] && (world.landscape[i][j] == Map.LANDSCAPE_WATER_HIGH || world.landscape[i][j] == Map.LANDSCAPE_WATER_LOW)) {
-                    world.landscape[i][j] = Map.LANDSCAPE_FRESH_WATER;
+                if (!used[i][j] && (World.landscape[i][j] == Map.LANDSCAPE_WATER_HIGH || World.landscape[i][j] == Map.LANDSCAPE_WATER_LOW)) {
+                    World.landscape[i][j] = Map.LANDSCAPE_FRESH_WATER;
                 }
     }
 
     private static void addWaterHigh() {
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
-                if (world.landscape[i][j] == Map.LANDSCAPE_WATER_LOW &&
+                if (World.landscape[i][j] == Map.LANDSCAPE_WATER_LOW &&
                         (aroundValue(i, j, Map.LANDSCAPE_GROUND_HIGH, WATER_WIDTH) || aroundValue(i, j, Map.LANDSCAPE_GROUND_LOW, WATER_WIDTH)))
-                    world.landscape[i][j] = Map.LANDSCAPE_WATER_HIGH;
+                    World.landscape[i][j] = Map.LANDSCAPE_WATER_HIGH;
     }
 
     private static void addGroundLow() {
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
-                if (world.landscape[i][j] == Map.LANDSCAPE_GROUND_HIGH && aroundValue(i, j, Map.LANDSCAPE_WATER_LOW, GROUND_WIDTH))
-                    world.landscape[i][j] = Map.LANDSCAPE_GROUND_LOW;
+                if (World.landscape[i][j] == Map.LANDSCAPE_GROUND_HIGH && aroundValue(i, j, Map.LANDSCAPE_WATER_LOW, GROUND_WIDTH))
+                    World.landscape[i][j] = Map.LANDSCAPE_GROUND_LOW;
     }
 
     private static boolean aroundValue(int x, int y, int data, int width) {
         for (int i=x-2 * width; i<=x+2 * width; i++)
             for (int j=y-2 * width; j<=y+2 * width; j++)
-                if (xMath.inMap(i, j) && (world.landscape[i][j] == data) && (Math.abs(i - x) + Math.abs(j - y)) < width) return true;
+                if (xMath.inMap(i, j) && (World.landscape[i][j] == data) && (Math.abs(i - x) + Math.abs(j - y)) < width) return true;
         return false;
     }
 
@@ -206,15 +203,15 @@ public class WorldCreator {
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
                 if (getAroundSimilar(i, j) <= LEVEL_OF_SMOOTHING)
-                    world.landscape[i][j] = getValueToChange(i, j);
+                    World.landscape[i][j] = getValueToChange(i, j);
     }
 
     private static int getValueToChange(int x, int y) {
-        if (xMath.inMap(x - 1, y) && (world.landscape[x - 1][y] != world.landscape[x][y])) return world.landscape[x - 1][y];
-        if (xMath.inMap(x + 1, y) && (world.landscape[x + 1][y] != world.landscape[x][y])) return world.landscape[x + 1][y];
-        if (xMath.inMap(x, y - 1) && (world.landscape[x][y - 1] != world.landscape[x][y])) return world.landscape[x][y - 1];
-        if (xMath.inMap(x, y + 1) && (world.landscape[x][y + 1] != world.landscape[x][y])) return world.landscape[x][y + 1];
-        return world.landscape[x][y];
+        if (xMath.inMap(x - 1, y) && (World.landscape[x - 1][y] != World.landscape[x][y])) return World.landscape[x - 1][y];
+        if (xMath.inMap(x + 1, y) && (World.landscape[x + 1][y] != World.landscape[x][y])) return World.landscape[x + 1][y];
+        if (xMath.inMap(x, y - 1) && (World.landscape[x][y - 1] != World.landscape[x][y])) return World.landscape[x][y - 1];
+        if (xMath.inMap(x, y + 1) && (World.landscape[x][y + 1] != World.landscape[x][y])) return World.landscape[x][y + 1];
+        return World.landscape[x][y];
     }
 
     private static int getAroundSimilar(int x, int y) {
@@ -222,7 +219,7 @@ public class WorldCreator {
         for (int i=x-1; i<=x+1; i++)
             for (int j=y-1; j<=y+1; j++)
                 if (xMath.inMap(i, j)) {
-                    if (world.landscape[x][y] == world.landscape[i][j]) res++;
+                    if (World.landscape[x][y] == World.landscape[i][j]) res++;
                 } else res++;
         return res;
     }
@@ -230,7 +227,7 @@ public class WorldCreator {
     private static void addWater() {
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
-                world.landscape[i][j] = Map.LANDSCAPE_WATER_LOW;
+                World.landscape[i][j] = Map.LANDSCAPE_WATER_LOW;
     }
 
     private static void addGrass() {
@@ -249,9 +246,9 @@ public class WorldCreator {
         while (!q.isEmpty() && res < need) {
             int x = q.peek().getX();
             int y = q.peek().getY();
-            if (world.landscape[x][y] == Map.LANDSCAPE_GROUND_HIGH || world.landscape[x][y] == Map.LANDSCAPE_GROUND_LOW) {
+            if (World.landscape[x][y] == Map.LANDSCAPE_GROUND_HIGH || World.landscape[x][y] == Map.LANDSCAPE_GROUND_LOW) {
                 res++;
-                world.landscape[x][y] = Map.LANDSCAPE_GRASS;
+                World.landscape[x][y] = Map.LANDSCAPE_GRASS;
                 if (!xRandom.getBoolean((Math.abs(xSt - x) + Math.abs(ySt - y)) * DELTA_GRASS_OVER_PROBABLY)) {
                     if (xMath.inMap(x + 1, y)) q.add(new Point(x + 1, y));
                     if (xMath.inMap(x - 1, y)) q.add(new Point(x - 1, y));
@@ -280,9 +277,9 @@ public class WorldCreator {
         while (!q.isEmpty() && res < need) {
             int x = q.peek().getX();
             int y = q.peek().getY();
-            if (world.landscape[x][y] == Map.LANDSCAPE_WATER_LOW) {
+            if (World.landscape[x][y] == Map.LANDSCAPE_WATER_LOW) {
                 res++;
-                world.landscape[x][y] = Map.LANDSCAPE_GROUND_HIGH;
+                World.landscape[x][y] = Map.LANDSCAPE_GROUND_HIGH;
                 if (!xRandom.getBoolean((Math.abs(xSt - x) + Math.abs(ySt - y)) * DELTA_GROUND_OVER_PROBABLY)) {
                     if (xMath.inMap(x + 1, y)) q.add(new Point(x + 1, y));
                     if (xMath.inMap(x - 1, y)) q.add(new Point(x - 1, y));

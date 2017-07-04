@@ -4,6 +4,7 @@ import code.GUI.Cell.CellRenderer;
 import code.GUI.Main.MainPanel;
 import code.GUI.Map.Map;
 import code.GUI.Map.MapRender;
+import code.GUI.World.World;
 import code.Logic.Engine.Engine;
 import code.MyMath.Point;
 import code.MyMath.xMath;
@@ -35,11 +36,11 @@ abstract public class Creature {
         this.PERIOD_OF_PREGNANT = PERIOD_OF_PREGNANT;
         this.NORMAL_FACE = NORMAL_FACE;
         exist = true;
-        Map.world.ref[pos.getX()][pos.getY()] = this;
+        World.ref[pos.getX()][pos.getY()] = this;
     }
 
     protected boolean move(Point to) {
-        if (!xMath.inMap(to.getX(), to.getY()) || !canPass(to) || !Map.world.checkEmptyPosition(to.getX(), to.getY()) ||
+        if (!xMath.inMap(to.getX(), to.getY()) || !canPass(to) || !World.checkEmptyPosition(to.getX(), to.getY()) ||
                 getPass(to) > energy) return false;
         moveTo(to);
         energy -= getPass(to);
@@ -47,8 +48,8 @@ abstract public class Creature {
     }
 
     protected void moveTo(Point to) {
-        Map.world.ref[pos.getX()][pos.getY()] = null;
-        Map.world.ref[to.getX()][to.getY()] = this;
+        World.ref[pos.getX()][pos.getY()] = null;
+        World.ref[to.getX()][to.getY()] = this;
         pos = to;
     }
 
@@ -82,7 +83,6 @@ abstract public class Creature {
             Engine.selected = null;
             Engine.existSelected = false;
         }
-        Map.world.ref[pos.getX()][pos.getY()] = null;
         return false;
     }
 

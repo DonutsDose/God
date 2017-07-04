@@ -2,6 +2,7 @@ package code.Logic.Abstract;
 
 import code.GUI.Main.MainPanel;
 import code.GUI.Map.Map;
+import code.GUI.World.World;
 import code.Logic.Engine.Engine;
 import code.Logic.Objects.NewAnimal;
 import code.Logic.Objects.Plant;
@@ -58,37 +59,37 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
         //SCANNING-------
         int eatIndex = -1, partnerIndex = -1;
         Point partner = new Point(0, 0), eat = new Point(0, 0);
-        for (int i=0; i<Map.world.creatures.size(); i++)
-            if (Map.world.creatures.get(i).exist) {
-                //FIND_EAT
-                if (canEat(Map.world.creatures.get(i)) && xMath.maxDist(pos, Map.world.creatures.get(i).pos) <= AREA_OF_VISIBLE && canPass(Map.world.creatures.get(i).pos)) {
-                    if (eatIndex == -1) {
-                        eatIndex = i;
-                        eat = new Point(Map.world.creatures.get(i).pos.getX(), Map.world.creatures.get(i).pos.getY());
-                    } else {
-                        if (xMath.maxDist(pos, Map.world.creatures.get(i).pos) < xMath.maxDist(pos, eat)) {
+        for (int i=pos.getX() - AREA_OF_VISIBLE; i<=pos.getY() + AREA_OF_VISIBLE; i++)
+            for (int j=pos.getY() - AREA_OF_VISIBLE; j<=pos.getY() + AREA_OF_VISIBLE; j++)
+                if (xMath.inMap(i, j) && World.ref[i][j] != null) {
+                    //FIND EAT
+                    if (canEat(World.ref[i][j]) && canPass(World.ref[i][j].pos)) {
+                        if (eatIndex == -1) {
                             eatIndex = i;
-                            eat = new Point(Map.world.creatures.get(i).pos.getX(), Map.world.creatures.get(i).pos.getY());
+                            eat = new Point(World.ref[i][j].pos.getX(), World.ref[i][j].pos.getY());
+                        } else {
+                            if (xMath.maxDist(pos, World.ref[i][j].pos) < xMath.maxDist(pos, eat)) {
+                                eatIndex = i;
+                                eat = new Point(World.ref[i][j].pos.getX(), World.ref[i][j].pos.getY());
+                            }
                         }
-                    }
-                }
-                //FIND_PARTNER
-                if (canReproductWith(Map.world.creatures.get(i))) {
-                    if (partnerIndex == -1) {
-                        partnerIndex = i;
-                        partner = new Point(Map.world.creatures.get(i).pos.getX(), Map.world.creatures.get(i).pos.getY());
-                    } else {
-                        if (xMath.maxDist(pos, Map.world.creatures.get(i).pos) < xMath.maxDist(pos, partner)) {
-                            partnerIndex = i;
-                            partner = new Point(Map.world.creatures.get(i).pos.getX(), Map.world.creatures.get(i).pos.getY());
+                    } else
+                        if (canReproductWith(World.ref[i][j])) {
+                            if (partnerIndex == -1) {
+                                partnerIndex = i;
+                                partner = new Point(World.ref[i][j].pos.getX(), World.ref[i][j].pos.getY());
+                            } else {
+                                if (xMath.maxDist(pos, World.ref[i][j].pos) < xMath.maxDist(pos, partner)) {
+                                    partnerIndex = i;
+                                    partner = new Point(World.ref[i][j].pos.getX(), World.ref[i][j].pos.getY());
+                                }
+                            }
                         }
-                    }
                 }
-            }
         //-----------------
         if (((satiety * 3) >> 1) < MAX_SATIETY) {
             if (eatIndex != -1) {
-                if (!tryToEat(eat, eatIndex)) {
+                if (!tryToEat(eat)) {
                     event("Deid by poisoning plants");
                     return false;
                 }
@@ -107,7 +108,7 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
         int cnt = xRandom.getIntInRange(0, 4), res = 0;
         for (int i=pos.getX() - 1; i<=pos.getX() + 1; i++)
             for (int j=pos.getY() - 1; j<=pos.getY() + 1; j++) {
-                if (cnt > 0 && xMath.inMap(i, j) && Map.world.checkEmptyPosition(i, j) && canPass(i, j)) {
+                if (cnt > 0 && xMath.inMap(i, j) && World.checkEmptyPosition(i, j) && canPass(i, j)) {
                     Engine.borned.add(new NewAnimal(new Point(i, j), type));
                     cnt--;
                     res++;
@@ -124,18 +125,18 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
         return (obj.type == type && obj.sex != sex && obj.readyToReproduct == 0 && readyToReproduct == 0 && !obj.pregnant && !pregnant);
     }
 
-    protected boolean tryToEat(Point to, int index) {
+    protected boolean tryToEat(Point to) {
         if (xMath.maxDist(pos, to) == 1) {
-            if (Map.world.creatures.get(index).type == Plant.CREATURE_PLANT_BELLADONNA) return false;
-            if (Map.getType(Map.world.creatures.get(index)) == Map.ANIMAL_SAPIENSE) {
+            if (World.ref[to.getX()][to.getY()].type == Plant.CREATURE_PLANT_BELLADONNA) return false;
+            if (Map.getType(World.ref[to.getX()][to.getY()]) == Map.ANIMAL_SAPIENSE) {
                 int firstPoints = getBattlePoints() + FIRST_ATTACK_BONUS;
-                int secondPoints = Map.world.creatures.get(index).getBattlePoints();
+                int secondPoints = World.ref[to.getX()][to.getY()].getBattlePoints();
                 if (firstPoints > secondPoints) {
-                    eatHim(this, Map.world.creatures.get(index));
+                    eatHim(this, World.ref[to.getX()][to.getY()]);
                 } else if (firstPoints < secondPoints) {
-                    eatHim(Map.world.creatures.get(index), this);
+                    eatHim(World.ref[to.getX()][to.getY()], this);
                 }
-            } else eatHim(this, Map.world.creatures.get(index));
+            } else eatHim(this, World.ref[to.getX()][to.getY()]);
         } else goTo(to);
         return true;
     }
@@ -153,8 +154,8 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
     protected void goToReproduct(Point to, int index) {
         if (xMath.maxDist(pos, to) == 1) {
             if (sex) {
-                Map.world.creatures.get(index).readyToReproduct = PERIOD_OF_PREGNANT;
-                Map.world.creatures.get(index).pregnant = true;
+                World.ref[to.getX()][to.getY()].readyToReproduct = PERIOD_OF_PREGNANT;
+                World.ref[to.getX()][to.getY()].pregnant = true;
             } else {
                 readyToReproduct = PERIOD_OF_PREGNANT;
                 pregnant = true;

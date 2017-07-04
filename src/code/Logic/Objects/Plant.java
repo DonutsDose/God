@@ -59,7 +59,7 @@ public class Plant extends Creature {
     public static final int PERIOD_OF_PREGNANCY_BELLADONNA = 30;
 
     public static final int PROBABLY_DIE = 600;
-    public static final int PROBABLY_TO_REPRODUCT = 65;
+    public static final int PROBABLY_TO_REPRODUCT = 85;
     public static final int PRODUCT_OVER = 10;
 
     private static final char PRODUCT_FACE = 't';

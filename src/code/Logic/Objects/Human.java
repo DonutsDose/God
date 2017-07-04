@@ -4,6 +4,7 @@ import code.GUI.Control.ControlPanel;
 import code.GUI.Formatter.Formatter;
 import code.GUI.Main.MainPanel;
 import code.GUI.Map.Map;
+import code.GUI.World.World;
 import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Abstract.AnimalSapiens;
 import code.MyMath.Point;
@@ -65,7 +66,7 @@ public class Human extends AnimalSapiens {
 
     @Override
     public int getPass(int x, int y) {
-        return Map.passabilityHuman[Map.world.landscape[x][y]];
+        return Map.passabilityHuman[World.landscape[x][y]];
     }
 
     @Override

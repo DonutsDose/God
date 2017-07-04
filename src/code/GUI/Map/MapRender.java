@@ -33,17 +33,19 @@ public class MapRender {
     public static void setBackground() {
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
-                background[i][j] = getBackgroundColor(Map.world.landscape[i][j]);
+                background[i][j] = getBackgroundColor(World.landscape[i][j]);
     }
 
     private static void updateForeground() {
-        for (int i = 0; i < Map.world.creatures.size(); i++)
-            foreground[Map.world.creatures.get(i).pos.getX()][Map.world.creatures.get(i).pos.getY()] = Map.world.creatures.get(i).color;
+        for (int i=0; i<Map.MAP_HIGHT; i++)
+            for (int j=0; j<Map.MAP_WIDTH; j++)
+                if (World.ref[i][j] != null) foreground[i][j] = World.ref[i][j].color;
     }
 
     private static void updateValue() {
-        for (int i = 0; i < Map.world.creatures.size(); i++)
-            value[Map.world.creatures.get(i).pos.getX()][Map.world.creatures.get(i).pos.getY()] = Map.world.creatures.get(i).face;
+        for (int i=0; i<Map.MAP_HIGHT; i++)
+            for (int j=0; j<Map.MAP_WIDTH; j++)
+                if (World.ref[i][j] != null) value[i][j] = World.ref[i][j].face;
     }
 
     private static int getBackgroundColor(int data) {

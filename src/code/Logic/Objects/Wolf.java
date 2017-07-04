@@ -4,6 +4,7 @@ import code.GUI.Control.ControlPanel;
 import code.GUI.Formatter.Formatter;
 import code.GUI.Main.MainPanel;
 import code.GUI.Map.Map;
+import code.GUI.World.World;
 import code.Logic.Abstract.AnimalPrimitive;
 import code.Logic.Abstract.AnimalSapiens;
 import code.MyMath.Point;
@@ -21,7 +22,7 @@ public class Wolf extends AnimalSapiens {
     private static final int PERIOD_OF_PREGNANT = 270;
     private static final int MAX_ENERGY = 4_500;
     private static final int MAX_SATIETY = 6000;
-    private static final int PROBABLY_TO_DIE = 600;
+    private static final int PROBABLY_TO_DIE = 1000;
     private static final int AREA_OF_VISIBLE = 7;
     private static final int PRODUCT_AGE = 134;
     private static final int DELTA_SATIETY = 13;
@@ -58,7 +59,7 @@ public class Wolf extends AnimalSapiens {
 
     @Override
     public int getPass(int x, int y) {
-        return Map.passabilityWolf[Map.world.landscape[x][y]];
+        return Map.passabilityWolf[World.landscape[x][y]];
     }
 
     @Override

@@ -63,7 +63,7 @@ public class Engine{
         creaturesAct();
         //NEW
         death();
-        Map.world.replant(replantTree);
+        World.replant(replantTree);
         replantTree = 0;
         addBorned();
         addNewFish();
@@ -91,30 +91,31 @@ public class Engine{
     }
 
     private static void death() {
-        for (int i=0; i<Map.world.creatures.size(); i++)
-            if (!Map.world.creatures.get(i).exist) {
-                switch (Map.world.creatures.get(i).type) {
-                    case AnimalPrimitive.CREATURE_ANIMAL_FISH:
-                        fishCount--;
-                        break;
-                    case AnimalPrimitive.CREATURE_ANIMAL_RABBIT:
-                        rabbitCount--;
-                        break;
-                    case AnimalSapiens.CREATURE_ANIMAL_BEAR:
-                        bearCount--;
-                        break;
-                    case AnimalSapiens.CREATURE_ANIMAL_WOLF:
-                        wolfCount--;
-                        break;
-                    case AnimalSapiens.CREATURE_ANIMAL_TIGER:
-                        tigerCount--;
-                        break;
-                    case AnimalSapiens.CREATURE_ANIMAL_HUMAN:
-                        humanCount--;
-                        break;
+        for (int i=0; i<Map.MAP_HIGHT; i++)
+            for (int j=0; j<Map.MAP_WIDTH; j++)
+                if (World.ref[i][j] != null && !World.ref[i][j].exist) {
+                    switch (World.ref[i][j].type) {
+                        case AnimalPrimitive.CREATURE_ANIMAL_FISH:
+                            fishCount--;
+                            break;
+                        case AnimalPrimitive.CREATURE_ANIMAL_RABBIT:
+                            rabbitCount--;
+                            break;
+                        case AnimalSapiens.CREATURE_ANIMAL_BEAR:
+                            bearCount--;
+                            break;
+                        case AnimalSapiens.CREATURE_ANIMAL_WOLF:
+                            wolfCount--;
+                            break;
+                        case AnimalSapiens.CREATURE_ANIMAL_TIGER:
+                            tigerCount--;
+                            break;
+                        case AnimalSapiens.CREATURE_ANIMAL_HUMAN:
+                            humanCount--;
+                            break;
+                    }
+                    World.ref[i][j] = null;
                 }
-                Map.world.creatures.remove(i);
-            }
         if (bearCount == 0) {
             MainPanel.eventPanel.update("Last bear death(");
             bearCount = -1;
@@ -140,31 +141,34 @@ public class Engine{
     private static void addBorned() {
         for (int i=0; i<borned.size(); i++)
             if (borned.get(i).type == AnimalSapiens.CREATURE_ANIMAL_BEAR) {
-                Map.world.creatures.add(new Bear(borned.get(i).pos, xRandom.getBoolean(50)));
+                World.ref[borned.get(i).pos.getX()][borned.get(i).pos.getY()] = new Bear(borned.get(i).pos, xRandom.getBoolean(50));
                 bearCount++;
             } else if (borned.get(i).type == AnimalSapiens.CREATURE_ANIMAL_WOLF) {
-                Map.world.creatures.add(new Wolf(borned.get(i).pos, xRandom.getBoolean(50)));
+                World.ref[borned.get(i).pos.getX()][borned.get(i).pos.getY()] = new Wolf(borned.get(i).pos, xRandom.getBoolean(50));
                 wolfCount++;
             } else if (borned.get(i).type == AnimalSapiens.CREATURE_ANIMAL_TIGER) {
-                Map.world.creatures.add(new Tiger(borned.get(i).pos, xRandom.getBoolean(50)));
+                World.ref[borned.get(i).pos.getX()][borned.get(i).pos.getY()] = new Tiger(borned.get(i).pos, xRandom.getBoolean(50));
                 tigerCount++;
             } else if (borned.get(i).type == AnimalSapiens.CREATURE_ANIMAL_HUMAN) {
-                Map.world.creatures.add(new Human(borned.get(i).pos, xRandom.getBoolean(50)));
+                World.ref[borned.get(i).pos.getX()][borned.get(i).pos.getY()] = new Human(borned.get(i).pos, xRandom.getBoolean(50));
                 humanCount++;
             }
     }
 
     private static void creaturesAct() {
-        for (int i=0; i<Map.world.creatures.size(); i++)
-            if (Map.world.creatures.get(i).exist) Map.world.creatures.get(i).exist = Map.world.creatures.get(i).act();
+        for (int i=0; i<Map.MAP_HIGHT; i++)
+            for (int j=0; j<Map.MAP_WIDTH; j++)
+                if (World.ref[i][j] != null && World.ref[i][j].exist) {
+                    World.ref[i][j].exist = World.ref[i][j].act();
+                }
     }
 
     private static void addNewFish() {
         for (int i=1; i<=Map.FISH_CREATING_COUNT; i++) {
             if (!xRandom.getBoolean(Map.FISH_CREATING_PROBABLY)) continue;
-            Point pt = Map.world.getWaterHigh();
-            if (Map.world.checkEmptyPosition(pt.getX(), pt.getY())) {
-                Map.world.creatures.add(new Fish(pt));
+            Point pt = World.getWaterHigh();
+            if (World.checkEmptyPosition(pt.getX(), pt.getY())) {
+                World.ref[pt.getX()][pt.getY()] = new Fish(pt);
                 fishCount++;
             }
         }
@@ -173,9 +177,9 @@ public class Engine{
     private static void addNewRabbit() {
         for (int i=1; i<=Map.RABBIT_CREATING_COUNT; i++) {
             if (!xRandom.getBoolean(Map.RABBIT_CREATING_PROBABLY)) continue;
-            Point pt = Map.world.getGroundHigh();
-            if (Map.world.checkEmptyPosition(pt.getX(), pt.getY())) {
-                Map.world.creatures.add(new Rabbit(pt));
+            Point pt = World.getGroundHigh();
+            if (World.checkEmptyPosition(pt.getX(), pt.getY())) {
+                World.ref[pt.getX()][pt.getY()] = new Rabbit(pt);
                 rabbitCount++;
             }
         }

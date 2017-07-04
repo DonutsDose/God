@@ -53,6 +53,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
             }
         });
         bearBox.setVisible(true);
+        bearBox.setSelected(true);
         checkBox.add(bearBox);
 
         wolfBox = new JCheckBox("Wolf");
@@ -63,6 +64,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
             }
         });
         wolfBox.setVisible(true);
+        wolfBox.setSelected(true);
         checkBox.add(wolfBox);
 
         tigerBox = new JCheckBox("Tiger");
@@ -73,6 +75,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
             }
         });
         tigerBox.setVisible(true);
+        tigerBox.setSelected(true);
         checkBox.add(tigerBox);
 
         humanBox = new JCheckBox("Human");
@@ -83,6 +86,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
             }
         });
         humanBox.setVisible(true);
+        humanBox.setSelected(true);
         checkBox.add(humanBox);
     }
 
@@ -102,7 +106,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
     private void setupButton() {
         // START
         start = new JButton();
-        start.setIcon(new ImageIcon("src\\resourse\\Image\\control-start.png"));
+        start.setIcon(new ImageIcon("Image\\control-start.png"));
         start.setPreferredSize(new Dimension(22, 25));
         start.addActionListener(new ActionListener() {
             @Override
@@ -118,7 +122,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
 
         // PAUSE
         pause = new JButton();
-        pause.setIcon(new ImageIcon("src\\resourse\\Image\\control-pause.png"));
+        pause.setIcon(new ImageIcon("Image\\control-pause.png"));
         pause.setPreferredSize(new Dimension(22, 25));
         pause.setEnabled(false);
         pause.addActionListener(new ActionListener() {
@@ -135,7 +139,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
 
         // FLAG
         flag = new JButton();
-        flag.setIcon(new ImageIcon("src\\resourse\\Image\\control-flag.png"));
+        flag.setIcon(new ImageIcon("Image\\control-flag.png"));
         flag.setPreferredSize(new Dimension(22, 25));
         flag.addActionListener(new ActionListener() {
             @Override
@@ -163,7 +167,7 @@ public class ControlPanel extends JPanel implements ChangeListener {
         
         // RESET
         reset = new JButton();
-        reset.setIcon(new ImageIcon("src\\resourse\\Image\\control-reset.png"));
+        reset.setIcon(new ImageIcon("Image\\control-reset.png"));
         reset.setPreferredSize(new Dimension(22, 25));
         reset.addActionListener(new ActionListener() {
             @Override

@@ -146,7 +146,7 @@ abstract public class AnimalSapiens extends AnimalPrimitive {
         if (Map.getType(victim) == Map.TREE) {
             victim.eaten();
         } else {
-            victim.exist = false;
+            victim.death(hunter.type);
             hunter.moveTo(victim.pos);
         }
     }

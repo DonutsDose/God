@@ -101,26 +101,6 @@ public class Engine{
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
                 if (World.ref[i][j] != null && !World.ref[i][j].exist) {
-                    switch (World.ref[i][j].type) {
-                        case AnimalPrimitive.CREATURE_ANIMAL_FISH:
-                            fishCount--;
-                            break;
-                        case AnimalPrimitive.CREATURE_ANIMAL_RABBIT:
-                            rabbitCount--;
-                            break;
-                        case AnimalSapiens.CREATURE_ANIMAL_BEAR:
-                            bearCount--;
-                            break;
-                        case AnimalSapiens.CREATURE_ANIMAL_WOLF:
-                            wolfCount--;
-                            break;
-                        case AnimalSapiens.CREATURE_ANIMAL_TIGER:
-                            tigerCount--;
-                            break;
-                        case AnimalSapiens.CREATURE_ANIMAL_HUMAN:
-                            humanCount--;
-                            break;
-                    }
                     World.ref[i][j] = null;
                 }
         if (bearCount == 0) {

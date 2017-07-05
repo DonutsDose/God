@@ -25,7 +25,7 @@ public class Wolf extends AnimalSapiens {
     private static final int PROBABLY_TO_DIE = 1000;
     private static final int AREA_OF_VISIBLE = 7;
     private static final int PRODUCT_AGE = 134;
-    private static final int DELTA_SATIETY = 13;
+    private static final int DELTA_SATIETY = 20;
     private static final int CALORIES = 4780;
     private static final int E_BATTLE = 2;
     private static final int A_BATTLE = 6;

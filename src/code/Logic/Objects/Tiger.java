@@ -25,7 +25,7 @@ public class Tiger extends AnimalSapiens {
     private static final int PROBABLY_TO_DIE = 1100;
     private static final int AREA_OF_VISIBLE = 7;
     private static final int PRODUCT_AGE = 300;
-    private static final int DELTA_SATIETY = 20;
+    private static final int DELTA_SATIETY = 25;
     private static final int CALORIES = 12630;
     private static final int E_BATTLE = 5;
     private static final int A_BATTLE = 2;

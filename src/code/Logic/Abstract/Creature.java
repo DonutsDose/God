@@ -83,26 +83,6 @@ abstract public class Creature {
             Engine.selected = null;
             Engine.existSelected = false;
         }
-        switch (type) {
-            case AnimalPrimitive.CREATURE_ANIMAL_FISH:
-                Engine.fishCount--;
-                break;
-            case AnimalPrimitive.CREATURE_ANIMAL_RABBIT:
-                Engine.rabbitCount--;
-                break;
-            case AnimalSapiens.CREATURE_ANIMAL_BEAR:
-                Engine.bearCount--;
-                break;
-            case AnimalSapiens.CREATURE_ANIMAL_WOLF:
-                Engine.wolfCount--;
-                break;
-            case AnimalSapiens.CREATURE_ANIMAL_TIGER:
-                Engine.tigerCount--;
-                break;
-            case AnimalSapiens.CREATURE_ANIMAL_HUMAN:
-                Engine.humanCount--;
-                break;
-        }
         return false;
     }
 

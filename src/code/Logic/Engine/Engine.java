@@ -98,27 +98,38 @@ public class Engine{
     }
 
     private static void death() {
+        fishCount = 0;
+        rabbitCount = 0;
+        bearCount = 0;
+        wolfCount = 0;
+        tigerCount = 0;
+        humanCount = 0;
         for (int i=0; i<Map.MAP_HIGHT; i++)
             for (int j=0; j<Map.MAP_WIDTH; j++)
-                if (World.ref[i][j] != null && !World.ref[i][j].exist) {
-                    World.ref[i][j] = null;
+                if (World.ref[i][j] != null) {
+                    if (!World.ref[i][j].exist) World.ref[i][j] = null; else {
+                        switch (World.ref[i][j].type) {
+                            case AnimalPrimitive.CREATURE_ANIMAL_FISH:
+                                Engine.fishCount++;
+                                break;
+                            case AnimalPrimitive.CREATURE_ANIMAL_RABBIT:
+                                Engine.rabbitCount++;
+                                break;
+                            case AnimalSapiens.CREATURE_ANIMAL_BEAR:
+                                Engine.bearCount++;
+                                break;
+                            case AnimalSapiens.CREATURE_ANIMAL_WOLF:
+                                Engine.wolfCount++;
+                                break;
+                            case AnimalSapiens.CREATURE_ANIMAL_TIGER:
+                                Engine.tigerCount++;
+                                break;
+                            case AnimalSapiens.CREATURE_ANIMAL_HUMAN:
+                                Engine.humanCount++;
+                                break;
+                        }
+                    }
                 }
-        if (bearCount == 0) {
-            MainPanel.eventPanel.update("Last bear death(");
-            bearCount = -1;
-        }
-        if (wolfCount == 0) {
-            MainPanel.eventPanel.update("Last wolf death(");
-            wolfCount = -1;
-        }
-        if (tigerCount == 0) {
-            MainPanel.eventPanel.update("Last tiger death(");
-            tigerCount = -1;
-        }
-        if (humanCount == 0) {
-            MainPanel.eventPanel.update("Last human death(");
-            humanCount = -1;
-        }
     }
 
     private static void resetAll() {
@@ -129,16 +140,12 @@ public class Engine{
         for (int i=0; i<borned.size(); i++)
             if (borned.get(i).type == AnimalSapiens.CREATURE_ANIMAL_BEAR) {
                 World.ref[borned.get(i).pos.getX()][borned.get(i).pos.getY()] = new Bear(borned.get(i).pos, xRandom.getBoolean(50));
-                bearCount++;
             } else if (borned.get(i).type == AnimalSapiens.CREATURE_ANIMAL_WOLF) {
                 World.ref[borned.get(i).pos.getX()][borned.get(i).pos.getY()] = new Wolf(borned.get(i).pos, xRandom.getBoolean(50));
-                wolfCount++;
             } else if (borned.get(i).type == AnimalSapiens.CREATURE_ANIMAL_TIGER) {
                 World.ref[borned.get(i).pos.getX()][borned.get(i).pos.getY()] = new Tiger(borned.get(i).pos, xRandom.getBoolean(50));
-                tigerCount++;
             } else if (borned.get(i).type == AnimalSapiens.CREATURE_ANIMAL_HUMAN) {
                 World.ref[borned.get(i).pos.getX()][borned.get(i).pos.getY()] = new Human(borned.get(i).pos, xRandom.getBoolean(50));
-                humanCount++;
             }
     }
 
@@ -157,7 +164,6 @@ public class Engine{
             Point pt = World.getWaterHigh();
             if (World.checkEmptyPosition(pt.getX(), pt.getY())) {
                 World.ref[pt.getX()][pt.getY()] = new Fish(pt);
-                fishCount++;
             }
         }
     }
@@ -168,7 +174,6 @@ public class Engine{
             Point pt = World.getGroundHigh();
             if (World.checkEmptyPosition(pt.getX(), pt.getY())) {
                 World.ref[pt.getX()][pt.getY()] = new Rabbit(pt);
-                rabbitCount++;
             }
         }
     }
